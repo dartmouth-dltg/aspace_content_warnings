@@ -1,0 +1,28 @@
+<%
+   section_id = "offensive_content_tags" if section_id.blank?
+%>
+<section id="<%= section_id %>" class="subrecord-form-dummy">
+  <h3><%= I18n.t("plugins.offensive_content_tag._plural") %></h3>
+  <%= readonly_context :offensive_content_tag do |readonly| %>
+    <div class="subrecord-form-container">
+      <%= readonly.list_for(offensive_content_tags, "offensive_content_tags[]") do |oct, index| %>
+        <div class="subrecord-form-fields">
+          <%= readonly.label_with_field "offensive_content_tag_code", (oct['offensive_content_tag_code'] && I18n.t('enumerations.offensive_content_tag_code.' + oct['offensive_content_tag_code'], oct['offensive_content_tag_code'])) %>
+          <%
+            if oct['description'].blank?
+              desc = I18n.t('offensive_content_tag_description.' + oct['offensive_content_tag_code'], default: oct['offensive_content_tag_code'])
+            else
+              desc = oct['description']
+            end
+          %>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="offensive_content_tag__<%= index %>__tag_description_">
+              <%= I18n.t('offensive_content_tag_description._singular','Offensive Content Description') %>
+            </label>
+            <div class="col-sm-9 label-only"><%= desc %></div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</section>

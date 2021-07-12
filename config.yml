@@ -1,0 +1,14 @@
+no_automatic_routes: true
+parents:
+  accession:
+    name: offensive_content_tags
+    cardinality: zero_to_many
+  archival_object:
+    name: offensive_content_tags
+    cardinality: zero_to_many
+  resource:
+    name: offensive_content_tags
+    cardinality: zero_to_many
+  digital_object:
+    name: offensive_content_tags
+    cardinality: zero_to_many
