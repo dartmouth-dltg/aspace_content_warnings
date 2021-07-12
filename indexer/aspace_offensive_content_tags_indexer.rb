@@ -17,6 +17,7 @@ class IndexerCommon
         if doc['primary_type'] == 'archival_object' && record['record']['offensive_content_tags'].empty?
           doc['ancestor_applied_offensive_tags_u_sstr'] = []
           doc['ancestor_applied_offensive_tags_at_level_u_sstr'] = ''
+          doc['ancestor_applied_offensive_tags_uri_u_sstr'] = ''
           if record['record']['ancestors']
             record['record']['ancestors'].each do |anc|
               if doc['ancestor_applied_offensive_tags_at_level_u_sstr'].empty?
@@ -26,6 +27,7 @@ class IndexerCommon
                   doc['ancestor_applied_offensive_tags_u_sstr'] << I18n.t('enumerations.offensive_content_tag_code.' + oct['offensive_content_tag_code'])
                 end
                 doc['ancestor_applied_offensive_tags_at_level_u_sstr'] = res_anc['level']
+                doc['ancestor_applied_offensive_tags_uri_u_sstr'] = res_anc['uri']
               end
             end
           end

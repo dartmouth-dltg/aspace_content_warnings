@@ -1,0 +1,23 @@
+<ul class="aspace-offensive-content-tags-list">
+  <% offensive_content_tags.each_with_index do |oct, idx| %>
+    <li>
+    <% unless oct['offensive_content_tag_code'].nil? %>
+      <%
+        oct_title = "#{t('enumerations.offensive_content_tag_code.' + oct['offensive_content_tag_code'], default: oct['offensive_content_tag_code'].nil? ? '' : oct['offensive_content_tag_code'])}"
+        if oct['description'].empty?
+          oct_description = t('offensive_content_tag_description.' + oct['offensive_content_tag_code'], default: oct['offensive_content_tag_code'].nil? ? '' : oct['offensive_content_tag_code'])
+        else
+          oct_description = process_mixed_content(oct['description'])
+        end
+      %>
+        
+      <span class="aspace-offensive-content-tag-title">
+        <%= oct_title %>
+      </span>
+      <span class="aspace-offensive-content-tag-description">
+        <%= oct_description %>
+      </span>
+    <% end %>
+    </li>
+  <% end %>
+</ul>

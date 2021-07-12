@@ -19,7 +19,7 @@
             <label class="col-sm-2 control-label" for="offensive_content_tag__<%= index %>__tag_description_">
               <%= I18n.t('offensive_content_tag_description._singular','Offensive Content Description') %>
             </label>
-            <div class="col-sm-9 label-only"><%= desc %></div>
+            <div class="col-sm-9 label-only"><%= clean_mixed_content(desc).html_safe %></div>
           </div>
         </div>
       <% end %>
