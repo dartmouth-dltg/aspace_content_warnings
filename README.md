@@ -32,8 +32,7 @@ See also:
   https://github.com/archivesspace/archivesspace/blob/master/UPGRADING.md
   
 This will create the tables required by the plugin, and will pre-populate the 
-system with a set of Traditonal Knowledge Labels. The controlled value list is editable
-should additional TK Labels be defined in future. 
+system with a set of Offensive Content Tags. The controlled value list is editable. 
 
 ## Configuration
 
@@ -51,14 +50,38 @@ AppConfig[:aspace_offensive_content_tags] = {
 
 ## Using the Plugin
 
+The plugin adds a new sub record to Accessions, Resources, Archival Objects, and Digital Objects.
+The new sub record allows staff users to select a type of offensive content and optionally a
+clarifying description of why the tag has been applied. Any number of tags can be applied.
+
+If an object has been tagged directly, the plugin adds new data to the accordion section in the 
+PUI which lists out the tags applied and the custom  description if added. A generic description 
+is applied if no custom description is available.
+
+In addition, the plugin adds warning tags just under the title of the object which, when clicked,
+will open the accordion section and scroll to the offensive content section.
+
+If an object has not been tagged directly, the plugin checks to see if any ancestors have had any
+tags applied and adds a set of inherited warning tags just under the title of the object prefixed
+with text indicating where the tag(s) where inherited from.
+
+Example: `Applied at the Series level: {TAG}`
+
+The PDF exports have also been modified to include the directly applied tags.
 
 ## Reports
 
+The plugin adds an additional report that gathers information about the offensive tags applied. The
+report includes the tag and any associated primary type (resource, accession, archival object, 
+and digital object).
 
 ## PUI Note
 
 This plugin overrides
 
+    /public/views/pdf/_resource.html.erb
+    /public/views/pdf/_archival_object.html.erb
+    /public/views/shared/_record_innards.html.erb
     
 If you are using other plugins which override the same files, you will need to reconcile
 them.

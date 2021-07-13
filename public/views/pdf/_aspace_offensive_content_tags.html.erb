@@ -1,27 +1,18 @@
-<ul class="aspace-offensive-content-tags-list">
-  <% offensive_tags = [] %>
-  <% offensive_content_tags.each_with_index do |oct, idx| %>
+<ul style="list-style: none;">
+<% Array(record.json['offensive_content_tags']).each do |oct| %>
     <li>
-    <% unless oct['offensive_content_tag_code'].nil? %>
-      <%
+     <%
         oct_title = "#{t('enumerations.offensive_content_tag_code.' + oct['offensive_content_tag_code'], default: oct['offensive_content_tag_code'].nil? ? '' : oct['offensive_content_tag_code'])}"
-        offensive_tags << oct_title
         if oct['description'].nil?
           oct_description = t('offensive_content_tag_description.' + oct['offensive_content_tag_code'], default: oct['offensive_content_tag_code'].nil? ? '' : oct['offensive_content_tag_code'])
         else
           oct_description = process_mixed_content(oct['description']).html_safe
         end
       %>
-        
-      <span class="aspace-offensive-content-tag-title">
-        <%= oct_title %>
-      </span>
-      <span class="aspace-offensive-content-tag-description">
-        <%= oct_description %>
-      </span>
-    <% end %>
+        <span style="font-weight: bold;"><%= oct_title %></span>
+        <p>
+          <%= oct_description %>
+        </p>
     </li>
-  <% end %>
+<% end %>
 </ul>
-<script>setup_offensive_tags(<%=raw offensive_tags %>);</script>
-

@@ -1,2 +1,9 @@
 en:
   aspace_offensive_content_tags: May Contain Offensive Content
+  
+  pdf_reports:
+    offensive_content_tags_heading: May Contain Offensive Content
+    
+  search_results:
+    filter:
+      offensive_content_tags_u_sstr: May Contain Offensive Content

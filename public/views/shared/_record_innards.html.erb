@@ -112,8 +112,11 @@
 	<!-- begin aspace_offensive_content_tags addition -->
   <% if AppConfig[:plugins].include?('aspace_offensive_content_tags') %>
     <% unless @result.json['offensive_content_tags'].blank? %>
-     <% x = render partial: 'aspace_offensive_content//tk_labels/offensive_content_tags', locals: {:offensive_content_tags =>  @result.json['offensive_content_tags']} %>
+     <% x = render partial: 'aspace_offensive_content_tags/offensive_content_tags', locals: {:offensive_content_tags =>  @result.json['offensive_content_tags']} %>
       <%= render partial: 'shared/accordion_panel', locals: {:p_title => t('aspace_offensive_content_tags'), :p_id => 'aspace_offensive_content_tags_list', :p_body => x} %>
+    <% end %>
+    <% unless @result.raw['inherited_offensive_content_tags_u_sstr'].blank? %>
+      <script>setup_iherited_offensive_content_tags(<%=raw @result.raw['inherited_offensive_content_tags_u_sstr'].first %>);</script>
     <% end %>
   <% end %>
 	<!-- end aspace_offensive_content_tags addition -->

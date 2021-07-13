@@ -1,3 +1,4 @@
+require 'aspace_logger'
 class IndexerCommon
 
   add_indexer_initialize_hook do |indexer|
@@ -12,28 +13,37 @@ class IndexerCommon
             doc['offensive_content_tags_u_sstr'] << I18n.t('enumerations.offensive_content_tag_code.' + oct['offensive_content_tag_code'])
           end
         end
-      
-        # for archival objects, check up the ancestor tree to see if any ancestors have applied any offensive content tags
-        if doc['primary_type'] == 'archival_object' && record['record']['offensive_content_tags'].empty?
-          doc['ancestor_applied_offensive_tags_u_sstr'] = []
-          doc['ancestor_applied_offensive_tags_at_level_u_sstr'] = ''
-          doc['ancestor_applied_offensive_tags_uri_u_sstr'] = ''
-          if record['record']['ancestors']
-            record['record']['ancestors'].each do |anc|
-              if doc['ancestor_applied_offensive_tags_at_level_u_sstr'].empty?
-                res_anc = JSONModel::HTTP.get_json(anc['ref'])
-                next if res_anc['offensive_content_tags'].empty?
-                res_anc['offensive_content_tags'].each do |oct|
-                  doc['ancestor_applied_offensive_tags_u_sstr'] << I18n.t('enumerations.offensive_content_tag_code.' + oct['offensive_content_tag_code'])
-                end
-                doc['ancestor_applied_offensive_tags_at_level_u_sstr'] = res_anc['level']
-                doc['ancestor_applied_offensive_tags_uri_u_sstr'] = res_anc['uri']
-              end
+        
+        if doc['primary_type'] == 'archival_object'
+          doc['inherited_offensive_content_tags_u_sstr'] = []
+          # only check if the object is not already tagged
+          if doc['offensive_content_tags_u_sstr'].empty?
+            if record['record']['parent']
+              get_parent_offensive_tags(record['record']['parent']['ref'], doc)
+            elsif record['record']['resource']
+              get_parent_offensive_tags(record['record']['resource']['ref'], doc)
             end
           end
-          
         end
       }
+    end
+  end
+  
+  def self.get_parent_offensive_tags(uri, doc)
+    tags = []
+    parent = JSONModel::HTTP.get_json(uri)
+    parent['offensive_content_tags'].each do |oct|
+      tags << I18n.t('enumerations.offensive_content_tag_code.' + oct['offensive_content_tag_code'])
+    end
+    if tags.length > 0
+      doc['inherited_offensive_content_tags_u_sstr'] << {'tags' => tags, 'level' => parent['level'], 'uri' => parent['uri']}.to_json
+    end
+    if doc['inherited_offensive_content_tags_u_sstr'].empty?
+      if parent['parent']
+        get_parent_offensive_tags(parent['parent']['ref'], doc)
+      elsif parent['resource']
+        get_parent_offensive_tags(parent['resource']['ref'], doc)
+      end
     end
   end
 
