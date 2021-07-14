@@ -1,0 +1,34 @@
+<%= form_tag(app_prefix("fill_request"), method: 'post', :id => 'submit_offensive_content_form') do %>
+<%= render partial: 'aspace_offensive_content_tags/submit_offensive_content_hiddens' %>
+<div id="public_submit_offensive_content">
+    <div class="form-group required ">
+      <%= label_tag(:user_name, "#{t('request.user_name')} #{t('request.required')}" ,  :class => 'sr-only') %>
+      <div class="input-group">
+        <%= text_field_tag :user_name, nil, :placeholder => t('request.user_name'), :class => "form-control"%>
+        <div class="input-group-addon">
+          <span class="required aria-hidden"><%= t('request.required') %></span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group required ">
+      <%= label_tag(:user_email, "#{t('request.user_email')} #{t('request.required')}",  :class => 'sr-only') %>
+      <div class="input-group">
+        <%= text_field_tag :user_email, nil, :type => 'email', :placeholder => t('request.user_email'), :class => 'form-control' %>
+        <div class="input-group-addon">
+          <span class="required aria-hidden"><%= t('request.required') %></span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group ">
+      <%= label_tag(:note, t('aspace_offensive_content_submit_note'),  :class => 'sr-only') %>
+      <%= text_area_tag :note, nil, :rows=> "3", :cols => "25", :placeholder => t('aspace_offensive_content_submit_note'), :class => 'form-control' %>
+    </div>
+    <div class="form-group honeypot">
+      <span class="aria-hidden">
+        <%= label_tag :comment %>
+        <%= text_field_tag :comment, nil, tabindex: '-1', :class => 'form-control'%>
+      </span>
+    </div>
+    <button type="submit" class="btn btn-primary action-btn noscript"><%= t('request.submit') %></button>
+  </div>
+<% end %>

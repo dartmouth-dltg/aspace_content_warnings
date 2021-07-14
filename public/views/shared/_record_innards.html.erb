@@ -111,13 +111,32 @@
 	
 	<!-- begin aspace_offensive_content_tags addition -->
   <% if AppConfig[:plugins].include?('aspace_offensive_content_tags') %>
+    <% offensive_content_allow_pui_submit = false %>
+    <% unless AppConfig[:aspace_offensive_content_allow_pui_submit].nil? %>
+      <% if defined?(@request) && !@request.nil? %>
+        <% public_submit_offensive_content = render partial: 'aspace_offensive_content_tags/submit_offensive_content' %>
+        <%= render partial: 'shared/modal', locals: {:modal_id => 'offensive_content_submit_modal', :title => t('aspace_offensive_content_public_submit'),
+            :modal_body => public_submit_offensive_content } %>
+        <% offensive_content_allow_pui_submit = true %>
+        <script type ="text/javascript" >setup_content_warning_submit("submit_offensive_content_modal",  "<%= t('aspace_offensive_content_submit_btn') %>")</script>
+      <% end %>
+    <% end %>
+    <%
+      # check to see if an external link has been set
+      if AppConfig[:aspace_offensive_content_tags_external_link].nil?
+        offensive_content_ext_link = ''
+      else
+        offensive_content_ext_link = '<a href="' + AppConfig[:aspace_offensive_content_tags_external_link] + '">' + t('aspace_offensive_content_more_info', default: 'Why we use these tags.') + '</a>'
+      end
+    %>
     <% unless @result.json['offensive_content_tags'].blank? %>
-     <% x = render partial: 'aspace_offensive_content_tags/offensive_content_tags', locals: {:offensive_content_tags =>  @result.json['offensive_content_tags']} %>
+      <% x = render partial: 'aspace_offensive_content_tags/offensive_content_tags', locals: {:offensive_content_tags =>  @result.json['offensive_content_tags'], :allow_pui_submit => offensive_content_allow_pui_submit, :ext_link => offensive_content_ext_link} %>
       <%= render partial: 'shared/accordion_panel', locals: {:p_title => t('aspace_offensive_content_tags'), :p_id => 'aspace_offensive_content_tags_list', :p_body => x} %>
     <% end %>
     <% unless @result.raw['inherited_offensive_content_tags_u_sstr'].blank? %>
-      <script>setup_iherited_offensive_content_tags(<%=raw @result.raw['inherited_offensive_content_tags_u_sstr'].first %>);</script>
+      <script>setup_iherited_offensive_content_tags(<%=raw @result.raw['inherited_offensive_content_tags_u_sstr'].first %>, offensive_content_ext_link, offensive_content_allow_pui_submit);</script>
     <% end %>
+
   <% end %>
 	<!-- end aspace_offensive_content_tags addition -->
 

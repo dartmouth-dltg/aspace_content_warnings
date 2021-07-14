@@ -18,4 +18,9 @@ Rails.application.config.after_initialize do
     AppConfig[:aspace_offensive_content_tags_external_link] = nil
   end
   
+  # check if the public is allowed to submit suggestions
+  unless AppConfig.has_key?(:aspace_offensive_content_allow_pui_submit)
+    AppConfig[:aspace_offensive_content_allow_pui_submit] = nil
+  end
+  
 end

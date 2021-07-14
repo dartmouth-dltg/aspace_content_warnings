@@ -1,6 +1,10 @@
 en:
   aspace_offensive_content_tags: May Contain Offensive Content
   aspace_offensive_content_more_info: Why we use these tags
+  aspace_offensive_content_tags_email_to: " - Content Warnings Submission"
+  aspace_offensive_content_submit_btn: Submit
+  aspace_offensive_content_public_submit: Submit Content Warning(s)
+  aspace_offensive_content_submit_note: Please tell us what content warnings you would like to see applied to this item and why.
   
   pdf_reports:
     offensive_content_tags_heading: May Contain Offensive Content

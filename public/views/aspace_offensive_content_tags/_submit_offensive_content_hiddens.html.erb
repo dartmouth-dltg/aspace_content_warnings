@@ -1,0 +1,19 @@
+<%# yield all the "hidden" fields for a submit offensive content, very similar to request_hiddens %>
+ <% unless @back_url.blank? %>
+ <input type='hidden' name='back_url' value='<%= @back_url %>' />
+ <% end %>
+<% @request.each_pair do |attr, value| %>
+  <% next if value.nil? %>
+    <% if value.kind_of? Array %>
+      <% value.each do |v| %>
+      <input type='hidden' name='<%= "#{attr.to_s}[]" %>' value='<%= sanitize v %>' />
+    <% end %>
+  <% else %>
+    <%
+      if attr.to_s == 'title'
+        value +=  t('aspace_offensive_content_tags_email_to', default: ' - Content Warnings Submission')  
+      end
+    %>
+    <input type='hidden' name='<%= attr.to_s %>' value='<%= sanitize value %>' />
+  <% end %>
+<% end %>
