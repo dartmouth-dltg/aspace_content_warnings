@@ -36,7 +36,7 @@ system with a set of Offensive Content Tags. The controlled value list is editab
 
 ## Configuration
 
-This plugin accepts two configuration options. One controls the visibility of Offensive Content Tags
+This plugin accepts three configuration options. One controls the visibility of Offensive Content Tags
 as facets in the staff application and the visibility of Offensive Content Tags
 as facets in the PUI. Set either `staff_faceting` or `public_faceting` to `true` to
 enable Offensive Content Tags facets in that area.
@@ -48,7 +48,7 @@ AppConfig[:aspace_offensive_content_tags] = {
 }
 ```
 
-The other configuration option specifies a link to an external site that explains the use of the 
+The second configuration option specifies a link to an external site that explains the use of the 
 offensive content labels if your institution provides that information. Set
 
 ```
@@ -57,6 +57,15 @@ AppConfig[:aspace_offensive_content_tags_external_link]
 
 to any valid URL. The link will appear below any tags with language specified by the value set in
 the `aspace_offensive_content_more_info` locales key.
+
+The third configuration option adds a form to collect proposals for additional content warning tags.
+It relies on the request form mechanism to a large extent and requires that the same AppConfig
+settings regarding emails for the pui be set. Set
+
+```
+AppConfig[:aspace_offensive_content_allow_pui_submit] = true
+```
+to enable the form on objects that allow requests.
 
 ## Using the Plugin
 

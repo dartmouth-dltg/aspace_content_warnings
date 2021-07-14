@@ -11,12 +11,8 @@
   background-color: #ffca2c;
 }
 
-.offensive-tags.inherited-offensive-tags span:first-of-type {
-  margin-left: 0.5em;
-}
-
-.offensive-tags.inherited-offensive-tags {
-  font-style: italic;
+.offensive-tags.inherited-offensive-tags div {
+  margin-bottom: 0.25em;
 }
 
 .offensive-tags.inherited-offensive-tags span {
