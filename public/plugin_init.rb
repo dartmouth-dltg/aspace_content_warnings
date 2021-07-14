@@ -1,3 +1,5 @@
+require 'uri'
+
 Rails.application.config.after_initialize do
   
   # only add faceting if configured
@@ -10,4 +12,10 @@ Rails.application.config.after_initialize do
       end
     end
   end
+  
+  # check if an external link has been set
+  unless AppConfig.has_key?(:aspace_offensive_content_tags_external_link)
+    AppConfig[:aspace_offensive_content_tags_external_link] = nil
+  end
+  
 end

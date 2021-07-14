@@ -41,3 +41,15 @@
   display: block;
   font-weight: bold;
 }
+
+.offensive-content-external-link {
+  margin: 0.25em 0 1em 0;
+  font-style: italic;
+}
+
+.offensive-content-external-link:before {
+  content: "\f059";
+  margin-right: 0.25em;
+  font-family: FontAwesome;
+  font-style: normal;
+}

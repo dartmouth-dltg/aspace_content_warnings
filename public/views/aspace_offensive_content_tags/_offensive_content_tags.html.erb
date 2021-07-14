@@ -23,5 +23,15 @@
     </li>
   <% end %>
 </ul>
-<script>setup_offensive_tags(<%=raw offensive_tags %>);</script>
 
+<%
+  # check to see if an external link has been set
+  if AppConfig[:aspace_offensive_content_tags_external_link].nil?
+    ext_link = ''
+  else
+    ext_link = '<a href="' + AppConfig[:aspace_offensive_content_tags_external_link] + '">' + t('aspace_offensive_content_more_info', default: 'Why we use these tags.') + '</a>'
+  end
+%>
+<script>
+  setup_offensive_tags(<%=raw offensive_tags %>, '<%=raw ext_link %>');
+</script>

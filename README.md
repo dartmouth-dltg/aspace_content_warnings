@@ -37,7 +37,7 @@ system with a set of Offensive Content Tags. The controlled value list is editab
 ## Configuration
 
 This plugin accepts two configuration options. One controls the visibility of Offensive Content Tags
-as facets in the staff application and the other controls the visibility of Offensive Content Tags
+as facets in the staff application and the visibility of Offensive Content Tags
 as facets in the PUI. Set either `staff_faceting` or `public_faceting` to `true` to
 enable Offensive Content Tags facets in that area.
 
@@ -47,6 +47,16 @@ AppConfig[:aspace_offensive_content_tags] = {
   'public_faceting' => true
 }
 ```
+
+The other configuration option specifies a link to an external site that explains the use of the 
+offensive content labels if your institution provides that information. Set
+
+```
+AppConfig[:aspace_offensive_content_tags_external_link]
+```
+
+to any valid URL. The link will appear below any tags with language specified by the value set in
+the `aspace_offensive_content_more_info` locales key.
 
 ## Using the Plugin
 
