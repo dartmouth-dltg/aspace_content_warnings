@@ -69,6 +69,32 @@ Example: `Applied at the Series level: {TAG}`
 
 The PDF exports have also been modified to include the directly applied tags.
 
+## Adding Additional Offensive Content Tags
+
+To add new offensive content tags, admin users should edit the controlled value list.
+```
+System Menu - Controlled Value Lists - Offensive Content Tags
+```
+
+In addition the locales should be updated with new translations for the tag label an the default 
+description associated with the tag. To edit the label translation, please edit 
+`frontened/locales/enumeratons.en.yml` and add a new `key:vaue` pair to 
+```
+en:
+  enumerations:
+    offensive_content_tag_code:
+      oct_new: New Offensive Content Tag (Example)    
+```
+
+To add a new default description, edit `frontend/locales/en.yml` and add a new `key:value` pair
+to 
+```
+en:
+  offensive_content_tag_description:
+    oct_new: >
+      This is a new example description for a new offensive content tag.    
+```  
+
 ## Reports
 
 The plugin adds an additional report that gathers information about the offensive tags applied. The
