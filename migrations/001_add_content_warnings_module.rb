@@ -3,9 +3,9 @@ require 'db/migrations/utils'
 Sequel.migration do
 
   up do
-    $stderr.puts("Adding Offensive Content Tags Module plugin tables")
+    $stderr.puts("Adding Content Warnings Module plugin tables")
 
-    create_table(:offensive_content_tag) do
+    create_table(:content_warning) do
       primary_key :id
 
       Integer :lock_version, :default => 0, :null => false
@@ -16,21 +16,21 @@ Sequel.migration do
       Integer :archival_object_id
       Integer :digital_object_id
 
-      DynamicEnum :offensive_content_tag_code_id
+      DynamicEnum :content_warning_code_id
       
       MediumBlobField :description
 
       apply_mtime_columns
     end
 
-    alter_table(:offensive_content_tag) do
+    alter_table(:content_warning) do
       add_foreign_key([:accession_id], :accession, :key => :id)
       add_foreign_key([:resource_id], :resource, :key => :id)
       add_foreign_key([:archival_object_id], :archival_object, :key => :id)
       add_foreign_key([:digital_object_id], :digital_object, :key => :id)
     end
 
-    create_editable_enum("offensive_content_tag_code", ["oct_race", "oct_hate", "oct_general", "oct_adult"])
+    create_editable_enum("content_warning_code", ["cw_race", "cw_hate", "cw_general", "cw_adult"])
 
   end
 

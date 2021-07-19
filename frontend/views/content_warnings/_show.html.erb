@@ -1,0 +1,28 @@
+<%
+   section_id = "content_warnings" if section_id.blank?
+%>
+<section id="<%= section_id %>" class="subrecord-form-dummy">
+  <h3><%= I18n.t("plugins.content_warning._plural") %></h3>
+  <%= readonly_context :content_warning do |readonly| %>
+    <div class="subrecord-form-container">
+      <%= readonly.list_for(content_warnings, "content_warnings[]") do |cw, index| %>
+        <div class="subrecord-form-fields">
+          <%= readonly.label_with_field "content_warning_code", (cw['content_warning_code'] && I18n.t('enumerations.content_warning_code.' + cw['content_warning_code'], cw['content_warning_code'])) %>
+          <%
+            if oct['description'].blank?
+              desc = I18n.t('content_warning_description.' + cw['content_warning_code'], default: cw['content_warning_code'])
+            else
+              desc = oct['description']
+            end
+          %>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="content_warning__<%= index %>_description_">
+              <%= I18n.t('content_warning_description._singular','Content Warning Description') %>
+            </label>
+            <div id="content_warning__<%= index %>_description_" class="col-sm-9 label-only"><%= clean_mixed_content(desc).html_safe %></div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</section>

@@ -1,5 +1,5 @@
-require_relative 'mixins/offensive_content_tags.rb'
+equire_relative 'mixins/content_warnings.rb'
 
 class DigitalObject
-  include OffensiveContentTags
+  include ContentWarnings
 end
