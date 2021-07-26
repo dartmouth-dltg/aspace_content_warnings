@@ -5,10 +5,10 @@ class IndexerCommon
     if AppConfig[:plugins].include?('aspace_content_warnings')
       indexer.add_document_prepare_hook {|doc, record|
         if ['accession','resource', 'archival_object', 'digital_object'].include?(doc['primary_type']) && record['record']['content_warnings']
-          offensive_content_tags = record['record']['content_warnings']
+          content_warnings = record['record']['content_warnings']
           doc['content_warnings_u_sstr'] = []
           doc['content_warnings_code_u_sstr'] = []
-          offensive_content_tags.each do |cw|
+          content_warnings.each do |cw|
             doc['content_warnings_code_u_sstr'] << cw['content_warnings_code']
             doc['content_warnings_u_sstr'] << I18n.t('enumerations.content_warning_code.' + cw['content_warning_code'])
           end

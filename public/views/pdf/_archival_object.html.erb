@@ -110,16 +110,16 @@ end
                     </dd>
                 <% end %>
               
-                <!-- Aspace TK Labels Customization Begin -->
-                <% if AppConfig[:plugins].include?('aspace_offensive_content_tags') %>
-                    <% unless record.json['offensive_content_tags'].empty? %>
-                      <dt><%= I18n.t('pdf_reports.offensive_content_tags_heading') %></dt>
+                <!-- Aspace Content Warning Customization Begin -->
+                <% if AppConfig[:plugins].include?('aspace_content_warnings') %>
+                    <% unless record.json['content_warnings'].empty? %>
+                      <dt><%= I18n.t('pdf_reports.content_warnings_heading') %></dt>
                       <dd>
-                        <%= render(:partial => 'aspace_offensive_content_tags', :locals => {:record => record}) %>
+                        <%= render(:partial => 'aspace_content_warnings', :locals => {:record => record}) %>
                         </dd>
                     <% end %>
                 <% end %>
-                <!-- Aspace TK Labels Customization End -->
+                <!-- Aspace Content Warning Customization End -->
             </dl>
 
         </div>

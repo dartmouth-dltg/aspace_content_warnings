@@ -1,4 +1,4 @@
-equire_relative 'mixins/content_warnings.rb'
+require_relative 'mixins/content_warnings.rb'
 
 class ArchivalObject
   include ContentWarnings

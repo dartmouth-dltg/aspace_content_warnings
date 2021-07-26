@@ -4,9 +4,9 @@
     "version" => 1,
     "type" => "object",
     "properties" => {
-      "offensive_content_tag_code" => {
+      "content_warning_code" => {
         "type" => "string",
-        "dynamic_enum" => "offensive_content_tag_code",
+        "dynamic_enum" => "content_warning_code",
         "ifmissing" => "error"
       },
       "description" => {

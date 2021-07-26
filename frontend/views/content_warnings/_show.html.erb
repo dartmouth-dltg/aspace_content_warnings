@@ -9,10 +9,10 @@
         <div class="subrecord-form-fields">
           <%= readonly.label_with_field "content_warning_code", (cw['content_warning_code'] && I18n.t('enumerations.content_warning_code.' + cw['content_warning_code'], cw['content_warning_code'])) %>
           <%
-            if oct['description'].blank?
+            if cw['description'].blank?
               desc = I18n.t('content_warning_description.' + cw['content_warning_code'], default: cw['content_warning_code'])
             else
-              desc = oct['description']
+              desc = cw['description']
             end
           %>
           <div class="form-group">

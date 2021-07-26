@@ -109,36 +109,36 @@
 	  <%= render partial: 'shared/accordion_panel', locals: {:p_title => t('external_docs'), :p_id => 'ext_doc_list', :p_body => x} %>
 	<% end %>
 	
-	<!-- begin aspace_offensive_content_tags addition -->
-  <% if AppConfig[:plugins].include?('aspace_offensive_content_tags') %>
-    <% offensive_content_allow_pui_submit = false %>
-    <% unless AppConfig[:aspace_offensive_content_allow_pui_submit].nil? %>
+	<!-- begin aspace_content_warnings addition -->
+  <% if AppConfig[:plugins].include?('aspace_content_warnings') %>
+    <% content_warnings_allow_pui_submit = false %>
+    <% unless AppConfig[:aspace_content_warnings_allow_pui_submit].nil? %>
       <% if defined?(@request) && !@request.nil? %>
-        <% public_submit_offensive_content = render partial: 'aspace_offensive_content_tags/submit_offensive_content' %>
-        <%= render partial: 'shared/modal', locals: {:modal_id => 'offensive_content_submit_modal', :title => t('aspace_offensive_content_public_submit'),
-            :modal_body => public_submit_offensive_content } %>
-        <% offensive_content_allow_pui_submit = true %>
-        <script type ="text/javascript" >setup_content_warning_submit("submit_offensive_content_modal",  "<%= t('aspace_offensive_content_submit_btn') %>")</script>
+        <% public_submit_content_warning = render partial: 'content_warnings/submit_content_warning' %>
+        <%= render partial: 'shared/modal', locals: {:modal_id => 'content_warning_submit_modal', :title => t('aspace_content_warnings_public_submit'),
+            :modal_body => public_submit_content_warning } %>
+        <% content_warnings_allow_pui_submit = true %>
+        <script type ="text/javascript" >setup_content_warning_submit("submit_content_warning_modal",  "<%= t('aspace_content_warnings_submit_btn') %>")</script>
       <% end %>
     <% end %>
     <%
       # check to see if an external link has been set
-      if AppConfig[:aspace_offensive_content_tags_external_link].nil?
-        offensive_content_ext_link = ''
+      if AppConfig[:aspace_content_warnings_external_link].nil?
+        content_warnings_ext_link = ''
       else
-        offensive_content_ext_link = '<a href="' + AppConfig[:aspace_offensive_content_tags_external_link] + '">' + t('aspace_offensive_content_more_info', default: 'Why we use these tags.') + '</a>'
+        content_warnings_ext_link = '<a href="' + AppConfig[:aspace_content_warnings_external_link] + '">' + t('aspace_content_warnings_more_info', default: 'Why we use these tags.') + '</a>'
       end
     %>
-    <% unless @result.json['offensive_content_tags'].blank? %>
-      <% x = render partial: 'aspace_offensive_content_tags/offensive_content_tags', locals: {:offensive_content_tags =>  @result.json['offensive_content_tags'], :ext_link => offensive_content_ext_link} %>
-      <%= render partial: 'shared/accordion_panel', locals: {:p_title => t('aspace_offensive_content_tags'), :p_id => 'aspace_offensive_content_tags_list', :p_body => x} %>
+    <% unless @result.json['content_warnings'].blank? %>
+      <% x = render partial: 'content_warnings/content_warnings', locals: {:content_warnings =>  @result.json['content_warnings'], :ext_link => content_warnings_ext_link} %>
+      <%= render partial: 'shared/accordion_panel', locals: {:p_title => t('aspace_content_warnings'), :p_id => 'aspace_content_warnings_list', :p_body => x} %>
     <% end %>
-    <% unless @result.raw['inherited_offensive_content_tags_u_sstr'].blank? %>
-      <script>setup_iherited_offensive_content_tags(<%=raw @result.raw['inherited_offensive_content_tags_u_sstr'].first %>, '<%=raw offensive_content_ext_link %>');</script>
+    <% unless @result.raw['inherited_content_warnings_u_sstr'].blank? %>
+      <script>setup_iherited_content_warnings(<%=raw @result.raw['inherited_content_warnings_u_sstr'].first %>, '<%=raw content_warnings_ext_link %>');</script>
     <% end %>
 
   <% end %>
-	<!-- end aspace_offensive_content_tags addition -->
+	<!-- end aspace_content_warnings addition -->
 
 	<% unless @repo_info.blank? || @repo_info['top']['name'].blank? %>
            <% x= render partial: 'repositories/repository_details' %>
