@@ -116,11 +116,12 @@ Example Statement for an inherited tag: `Applied at the Series level: {TAG}`
 ### PUI Tag Section - Inherited Tags
 ![PUI - Object with inherited tags](readme_images/ContentWarning-PUI-child-object-showing-inheritance.png)
 
-The PDF exports have also been modified to include the directly applied tags.
+### PUI PDF Export
 
-### PUI PDF Export Sample
+The PUI PDF exports have also been modified to include the **directly** applied tags. Inhertied tags
+are **not** included in the pdf export.
 
-A sample export is included in the readme_images directory.
+A sample PUI pdf export is included in the `sample_exports` directory.
 
 ## Adding Additional Content Warning Choices
 
