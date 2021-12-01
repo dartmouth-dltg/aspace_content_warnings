@@ -94,9 +94,10 @@ will open the accordion section and scroll to the content warning section.
 
 If an object has not been labeled directly, the plugin checks to see if any ancestors have had any
 warnings applied and adds a set of inherited warning tags just under the title of the object prefixed
-with text indicating where the tag(s) where inherited from.
+with text indicating where the tag(s) where inherited from. The inheritance check stops at the first
+ancestor with directly applied tags.
 
-Example: `Applied at the Series level: {TAG}`
+Example Statement for an inherited tag: `Applied at the Series level: {TAG}`
 
 ### PUI Tag Section - Direct Tag
 ![PUI - Object with own tags](readme_images/ContentWarning-PUI-child-object-with-own-tags.png)
@@ -119,7 +120,7 @@ System Menu - Controlled Value Lists - Content Warnings
 
 In addition the locales should be updated with new translations for the warning label an the default
 description associated with the tag. To edit the label translation, please edit
-`frontend/locales/enumeratons.en.yml` and add a new `key:vaue` pair to 
+`frontend/locales/enumeratons.en.yml` and add a new `key:vaue` pair to
 ```
 en:
   enumerations:
@@ -144,7 +145,7 @@ and digital object).
 
 ## Staff EAD & PDF Exports Note
 
-Note that this plugin does not (YET!) include the content warnings in the staff side EAD & PDF 
+Note that this plugin does not (YET!) include the content warnings in the staff side EAD & PDF
 exports.
 
 ## PUI Note

@@ -17,7 +17,7 @@ Sequel.migration do
       Integer :digital_object_id
 
       DynamicEnum :content_warning_code_id
-      
+
       MediumBlobField :description
 
       apply_mtime_columns
@@ -30,7 +30,7 @@ Sequel.migration do
       add_foreign_key([:digital_object_id], :digital_object, :key => :id)
     end
 
-    create_editable_enum("content_warning_code", ["cw_race", "cw_hate", "cw_general", "cw_adult"])
+    create_editable_enum("content_warning_code", ["cw_racism", "cw_hate", "cw_general", "cw_adult"])
 
   end
 

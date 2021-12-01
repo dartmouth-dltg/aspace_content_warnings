@@ -44,6 +44,6 @@ en:
     # hateful
     cw_hate: >
       This material contains hateful content.
-    # race
-    cw_race: >
+    # racism
+    cw_racism: >
       This material contains racist content.

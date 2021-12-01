@@ -12,7 +12,7 @@
           cw_description = process_mixed_content(cw['description']).html_safe
         end
       %>
-        
+
       <span class="aspace-content-warning-title">
         <%= cw_title %>
       </span>
@@ -24,5 +24,5 @@
   <% end %>
 </ul>
 <script>
-  setup_content_warnings(<%=raw content_warning_tags %>, '<%=raw ext_link %>');
+  setupContentWarnings(<%=raw content_warning_tags %>, '<%=raw ext_link %>');
 </script>

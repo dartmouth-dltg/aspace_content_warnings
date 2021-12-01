@@ -1,74 +1,72 @@
 // content warnings
-function setup_content_warnings(content_warnings, ext_link) {
+function setupContentWarnings(content_warnings, ext_link) {
   if (content_warnings.length > 0) {
     var $content_warnings = $('<div class="content-warnings"></div>');
-    apply_content_warnings(content_warnings, $content_warnings, ext_link);
+    applyContentWarnings(content_warnings, $content_warnings, ext_link);
   }
 }
 
-function setup_iherited_content_warnings(obj, ext_link) {
+function setupIheritedContentWarnings(obj, ext_link) {
   var $inherited_tags = $('<div class="content-warnings inherited-content-warnings"><div class="inherited-content-warning-prefix">Applied at the <a href="' + obj.uri + '">' + obj.level + '</a> level</div></div>');
-  apply_content_warnings(obj.tags, $inherited_tags, ext_link);
+  applyContentWarnings(obj.tags, $inherited_tags, ext_link);
 }
 
-function apply_content_warnings(content_warnings, tag_wrapper, ext_link) {
+function applyContentWarnings(content_warnings, tag_wrapper, ext_link) {
   $.each(content_warnings, function(idx, val) {
-      tag_wrapper.append('<span>' + val + '</span>');
-    });
+    tag_wrapper.append('<span>' + val + '</span>');
+  });
   if (ext_link != '') {
     tag_wrapper.append('<div class="content-warning-external-link">' + ext_link + '</div>');
   }
   $('#main-content h1').after(tag_wrapper);
 }
 
-function setup_content_warning_submit(modalId, text) {
-    $(".noscript").hide();
-    $('#main-content h1').after('<button id="content-warning-sub" class="btn btn-success content-warning-submit"><i class="fa fa-paper-plane"></i>&nbsp;Help us add a Content Warning</button>');
-    $('#main-content').on('click', '#content-warning-sub', function(e) {
-      e.preventDefault();
-      content_warning_form(text);
-    });
+function setupContentWarningSubmit(modalId, text) {
+  $(".noscript").hide();
+  $('#main-content h1').after('<button id="content-warning-sub" class="btn btn-success content-warning-submit"><i class="fa fa-paper-plane"></i>&nbsp;Help us add a Content Warning</button>');
+  $('#main-content').on('click', '#content-warning-sub', function(e) {
+    e.preventDefault();
+    contentWarningForm(text);
+  });
 }
 
-function content_warning_form(text) {
-  console.log('foo');
-    var $modal = $("#content_warning_submit_modal");
-    $modal.modal('show');
-    var x = $modal.find('.action-btn');
-    var btn;
-    if (x.length == 1) {
-        btn = x[0];
+function contentWarningForm(text) {
+  var $modal = $("#content_warning_submit_modal");
+  $modal.modal('show');
+  var x = $modal.find('.action-btn');
+  var btn;
+  if (x.length == 1) {
+    btn = x[0];
+  } else {
+    btn = x;
+  }
+  $(btn).attr('id', "submit_content_warning_btn");
+  $(btn).html(text);
+  $('body').on('click', '#submit_content_warning_btn', function(e) {
+    $("#submit_content_warning_form").submit();
+  });
+
+  $('#user_name',this).closest('.form-group').removeClass('has-error');
+  $('#user_email',this).closest('.form-group').removeClass('has-error');
+
+  $('#submit_content_warning_form', '#content_warning_submit_modal').on('submit', function() {
+    var proceed = true;
+
+    if ($('#user_name',this).val().trim() == '') {
+      $('#user_name',this).closest('.form-group').addClass('has-error');
+      proceed = false;
+    } else {
+      $('#user_name',this).closest('.form-group').removeClass('has-error');
     }
-    else {
-        btn = x;
+    if ($('#user_email',this).val().trim() == '') {
+      $('#user_email',this).closest('.form-group').addClass('has-error');
+      proceed = false;
+    } else {
+      $('#user_email',this).closest('.form-group').removeClass('has-error');
     }
-    $(btn).attr('id', "submit_content_warning_btn");
-    $(btn).html(text);
-    $('body').on('click', '#submit_content_warning_btn', function(e) {
-        $("#submit_content_warning_form").submit();
-    });
 
-    $('#user_name',this).closest('.form-group').removeClass('has-error');
-    $('#user_email',this).closest('.form-group').removeClass('has-error');
-
-    $('#submit_content_warning_form', '#content_warning_submit_modal').on('submit', function() {
-        var proceed = true;
-
-        if ($('#user_name',this).val().trim() == '') {
-            $('#user_name',this).closest('.form-group').addClass('has-error');
-            proceed = false;
-        } else {
-            $('#user_name',this).closest('.form-group').removeClass('has-error');
-        }
-        if ($('#user_email',this).val().trim() == '') {
-            $('#user_email',this).closest('.form-group').addClass('has-error');
-            proceed = false;
-        } else {
-            $('#user_email',this).closest('.form-group').removeClass('has-error');
-        }
-
-        return proceed;
-    });
+    return proceed;
+  });
 }
 
 $().ready(function() {
