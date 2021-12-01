@@ -1,1 +1,1 @@
-AdvancedSearch.define_field(:name => 'offensive_content_tag_code', :type => :enum, :visibility => [:staff], :solr_field => 'offensive_content_tags_code_u_sstr')
+AdvancedSearch.define_field(:name => 'content_warning_code', :type => :enum, :visibility => [:staff], :solr_field => 'content_warnings_code_u_sstr')

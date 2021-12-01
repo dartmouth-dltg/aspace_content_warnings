@@ -1,7 +1,7 @@
 en:
   enumerations:
-    offensive_content_tag_code:
-      oct_adult: Adult Content
-      oct_general: Offensive Content (general)
-      oct_hate: Hateful Content
-      oct_race: Racial Content
+    content_warning_code:
+      cw_adult: Adult Content
+      cw_general: Offensive Content (general)
+      cw_hate: Hateful Content
+      cw_race: Racist Content

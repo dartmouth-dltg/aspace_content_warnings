@@ -1,4 +1,4 @@
-.offensive-tags span {
+.content-warnings span {
   display: inline-block;
   margin: 0 0.5em 0.25em 0;
   padding: 0.5em 1em;
@@ -7,23 +7,23 @@
   background-color: #ffc107;
 }
 
-.offensive-tags span:hover {
+.content-warnings span:hover {
   background-color: #ffca2c;
 }
 
-.offensive-tags.inherited-offensive-tags div {
+.content-warnings.inherited-content-warnings div {
   margin-bottom: 0.25em;
 }
 
-.offensive-tags.inherited-offensive-tags span {
+.content-warnings.inherited-content-warnings span {
   font-style: normal;
 }
 
-.offensive-tags.inherited-offensive-tags a {
+.content-warnings.inherited-content-warnings a {
   text-transform: capitalize;
 }
 
-.offensive-tags span::before {
+.content-warnings span::before {
   margin-right: 0.1em;
   content: "\f02b";
   font-family: FontAwesome;
@@ -34,12 +34,12 @@
   font-weight: bold;
 }
 
-.offensive-content-external-link {
+.content-warning-external-link {
   display: inline-block;
   font-style: italic;
 }
 
-.offensive-content-external-link:before {
+.content-warning-external-link:before {
   content: "\f059";
   margin-right: 0.25em;
   font-family: FontAwesome;

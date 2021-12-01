@@ -1,8 +1,0 @@
-<% define_template "offensive_content_tag", jsonmodel_definition(:offensive_content_tag) do |form| %>
-  <div class="subrecord-form-fields">
-    <%= form.label_with_field('offensive_content_tag_code',
-                          form.select('offensive_content_tag_code', form.possible_options_for('offensive_content_tag_code', true), {}),
-                          :col_size => 9) %>
-    <%= form.label_and_textarea("description", {:field_opts => {:class => "mixed-content"}}) %>
-  </div>
-<% end %>

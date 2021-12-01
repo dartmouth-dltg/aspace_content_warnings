@@ -1,0 +1,28 @@
+<ul class="aspace-content-warnings-list">
+  <% content_warning_tags = [] %>
+  <% content_warnings.each_with_index do |cw, idx| %>
+    <li>
+    <% unless cw['content_warning_code'].nil? %>
+      <%
+        cw_title = "#{t('enumerations.content_warning_code.' + cw['content_warning_code'], default: cw['content_warning_code'].nil? ? '' : cw['content_warning_code'])}"
+        content_warning_tags << cw_title
+        if cw['description'].nil?
+          cw_description = t('content_warning_description.' + cw['content_warning_code'], default: cw['content_warning_code'].nil? ? '' : cw['content_warning_code'])
+        else
+          cw_description = process_mixed_content(cw['description']).html_safe
+        end
+      %>
+        
+      <span class="aspace-content-warning-title">
+        <%= cw_title %>
+      </span>
+      <span class="aspace-content-warning-description">
+        <%= cw_description %>
+      </span>
+    <% end %>
+    </li>
+  <% end %>
+</ul>
+<script>
+  setup_content_warnings(<%=raw content_warning_tags %>, '<%=raw ext_link %>');
+</script>

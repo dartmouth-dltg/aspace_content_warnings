@@ -1,5 +1,5 @@
-require_relative 'mixins/offensive_content_tags.rb'
+require_relative 'mixins/content_warnings.rb'
 
 class Accession
-  include OffensiveContentTags
+  include ContentWarnings
 end

@@ -1,49 +1,49 @@
 en:
   plugins:
-    aspace_offensive_content_tags:
-      _plural: Offensive Content Tags
-      _singular: Offensive Content Tag
-    offensive_content_tag:
-      _plural: Offensive Content Tags
-      _singular: Offensive Content Tag
+    aspace_content_warnings:
+      _plural: Content Warnings
+      _singular: Content Warning
+    content_warning:
+      _plural: Content Warnings
+      _singular: Content Warning
       _frontend:
         action:
-          add: Add Offensive Content Tag
+          add: Add Content Warning
 
-  offensive_content_tag:
-    offensive_content_tag_code: Offensive Content Type
+  content_warning:
+    content_warning_code: Content Warning Type
     description: Description
 
   enumeration_names:
-    offensive_content_tag_code: Offensive Content Type
+    content_warning_code: Content Warning Type
 
   advanced_search:
     enum:
-      offensive_content_tag_code: Offensive Content Type
+      content_warning_code: Content Warning Type
     text:
-      offensive_content_tags_u_sstr: Offensive Content Type
-      
+     content_warnings_u_sstr: Content Warning Type
+
   reports:
-    offensive_content_tags_list_report:
-      title: Offensive Content Tags List Report
+    content_warnings_list_report:
+      title: Content Warnings List Report
       description: >
-        List all Offensive Content Tags and associated Accessions, Resources, Archival Objects, and Digital Objects.
-      
+        List all Content Warnings and associated Accessions, Resources, Archival Objects, and Digital Objects.
+
   search:
     multi:
       title_sort: Title
-      offensive_content_tags_u_sstr: Offensive Content Type
-      
-  offensive_content_tag_description:
-    # race
-    oct_race: >
-      This material contains racial content.
-    # hateful
-    oct_hate: >
-      This material contains hateful content.
-    # general
-    oct_general: >
-      This material contains offensive content.
+      content_warnings_u_sstr: Content Warning Type
+
+  content_warning_description:
     # adult
-    oct_adult: >
+    cw_adult: >
       This material contains adult themed content.
+    # general
+    cw_general: >
+      This material contains offensive content.
+    # hateful
+    cw_hate: >
+      This material contains hateful content.
+    # race
+    cw_race: >
+      This material contains racist content.

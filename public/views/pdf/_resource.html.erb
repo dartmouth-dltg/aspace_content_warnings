@@ -84,14 +84,14 @@
 <% end %>
 </ul>
 
-<!-- Aspace Offensive Content Customization Begin -->
-<% if AppConfig[:plugins].include?('aspace_offensive_content_tags') %>
-  <% unless record.json['offensive_content_tags'].empty? %>
-    <h3><%= I18n.t('pdf_reports.offensive_content_tags_heading') %></h3>
-    <%= render(:partial => 'aspace_offensive_content_tags', :locals => {:record => record}) %>
+<!-- Aspace Content Warning Customization Begin -->
+<% if AppConfig[:plugins].include?('aspace_content_warnings') %>
+  <% unless record.json['content_warnings'].empty? %>
+    <h3><%= I18n.t('pdf_reports.content_warnings_heading') %></h3>
+    <%= render(:partial => 'aspace_content_warnings', :locals => {:record => record}) %>
   <% end %>
 <% end %>
-<!-- Aspace Offensive Content Customization End -->
+<!-- Aspace Content Warning Customization End -->
 
 <div class="collection-inventory">
 <% if has_children %>

@@ -1,0 +1,18 @@
+<ul style="list-style: none;">
+<% Array(record.json['content_warnings']).each do |cw| %>
+    <li>
+     <%
+        cw_title = "#{t('enumerations.content_warning_code.' + cw['content_warning_code'], default: cw['content_warning_code'].nil? ? '' : cw['content_warning_code'])}"
+        if cw['description'].nil?
+          cw_description = t('content_warning_description.' + cw['content_warning_code'], default: cw['content_warning_code'].nil? ? '' : cw['content_warning_code'])
+        else
+          cw_description = process_mixed_content(cw['description']).html_safe
+        end
+      %>
+        <span style="font-weight: bold;"><%= cw_title %></span>
+        <p>
+          <%= cw_description %>
+        </p>
+    </li>
+<% end %>
+</ul>
