@@ -1,20 +1,6 @@
 class ContentWarningsListReport < AbstractReport
 
   register_report
-  
-  # we override this since the query may return too many results
-  def get_content
-    array = []
-    query.each do |result|
-      row = result.to_hash
-      next if row[:content_warning_code_id].nil?
-      fix_row(row)
-      array.push(row)
-    end
-    info[:repository] = repository
-    after_tasks
-    array
-  end
 
   def query_string
   "(
@@ -25,8 +11,8 @@ class ContentWarningsListReport < AbstractReport
         'resource' AS type,
         enumeration_value.value AS tag_code
     FROM
-        resource
-    LEFT JOIN content_warning ON resource.id = content_warning.resource_id
+        content_warning
+    LEFT JOIN resource ON resource.id = content_warning.resource_id
     LEFT JOIN enumeration_value ON enumeration_value.id = content_warning.content_warning_code_id
     ORDER BY
         title,
@@ -41,8 +27,8 @@ class ContentWarningsListReport < AbstractReport
           'accession' AS type,
           enumeration_value.value AS tag_code
       FROM
-          accession
-      LEFT JOIN content_warning ON accession.id = content_warning.resource_id
+          content_warning
+      LEFT JOIN accession ON accession.id = content_warning.resource_id
       LEFT JOIN enumeration_value ON enumeration_value.id = content_warning.content_warning_code_id
       ORDER BY
           title,
@@ -57,8 +43,8 @@ class ContentWarningsListReport < AbstractReport
           'archival object' AS type,
           enumeration_value.value AS tag_code
       FROM
-          archival_object
-      LEFT JOIN content_warning ON archival_object.id = content_warning.resource_id
+          content_warning
+      LEFT JOIN archival_object ON archival_object.id = content_warning.resource_id
       LEFT JOIN enumeration_value ON enumeration_value.id = content_warning.content_warning_code_id
       ORDER BY
           title,
@@ -73,8 +59,8 @@ class ContentWarningsListReport < AbstractReport
           'digital object' AS type,
           enumeration_value.value AS tag_code
       FROM
-          digital_object
-      LEFT JOIN content_warning ON digital_object.id = content_warning.resource_id
+          content_warning
+      LEFT JOIN digital_object ON digital_object.id = content_warning.resource_id
       LEFT JOIN enumeration_value ON enumeration_value.id = content_warning.content_warning_code_id
       ORDER BY
           title,

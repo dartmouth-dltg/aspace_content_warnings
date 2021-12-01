@@ -22,28 +22,28 @@ en:
       content_warning_code: Content Warning Type
     text:
      content_warnings_u_sstr: Content Warning Type
-      
+
   reports:
     content_warnings_list_report:
       title: Content Warnings List Report
       description: >
         List all Content Warnings and associated Accessions, Resources, Archival Objects, and Digital Objects.
-      
+
   search:
     multi:
       title_sort: Title
       content_warnings_u_sstr: Content Warning Type
-      
+
   content_warning_description:
-    # race
-    cw_race: >
-      This material contains racial content.
-    # hateful
-    cw_hate: >
-      This material contains hateful content.
-    # general
-    cw_general: >
-      This material contains offensive content.
     # adult
     cw_adult: >
       This material contains adult themed content.
+    # general
+    cw_general: >
+      This material contains offensive content.
+    # hateful
+    cw_hate: >
+      This material contains hateful content.
+    # race
+    cw_race: >
+      This material contains racist content.
