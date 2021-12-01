@@ -29,6 +29,14 @@
   font-family: FontAwesome;
 }
 
+.aspace-content-warning-title {
+  font-weight: bold;
+}
+
+.aspace-content-warning-description {
+  display: block;
+}
+
 .aspace-offensive-content-tag-title {
   display: block;
   font-weight: bold;
