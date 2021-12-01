@@ -37,6 +37,13 @@ See also:
 
 This will create the tables required by the plugin, and will pre-populate the
 system with a set of Content Warnings. The controlled value list is editable.
+The plugin provides the following warnings out of the box.
+```
+cw_adult: Adult Content
+cw_general: Offensive Content (general)
+cw_hate: Hateful Content
+cw_racism: Racist Content
+```
 
 ## Configuration
 
@@ -124,7 +131,7 @@ System Menu - Controlled Value Lists - Content Warnings
 
 In addition the locales should be updated with new translations for the warning label an the default
 description associated with the tag. To edit the label translation, please edit
-`frontend/locales/enumeratons.en.yml` and add a new `key:vaue` pair to
+`frontend/locales/enumeratons.en.yml` and add a new `key:value` pair to
 ```
 en:
   enumerations:
