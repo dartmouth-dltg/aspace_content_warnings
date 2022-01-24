@@ -40,7 +40,7 @@ system with a set of Content Warnings. The controlled value list is editable.
 The plugin provides the following warnings out of the box.
 ```
 cw_adult: Adult Content
-cw_general: Offensive Content (general)
+cw_general: Harmful Content (general)
 cw_hate: Hateful Content
 cw_racism: Racist Content
 ```
@@ -117,6 +117,11 @@ Example Statement for an inherited tag: `Applied at the Series level: {TAG}`
 
 ### PUI Tag Section - Inherited Tags
 ![PUI - Object with inherited tags](readme_images/ContentWarning-PUI-child-object-showing-inheritance.png)
+
+### PUI - General Tag Only Configuration
+
+Note that if the configuration option to only display the general tag is set, only that tag & warning
+will be displayed in the PUI for direct and inherited tags.
 
 ### PUI PDF Export
 
