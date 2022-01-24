@@ -129,6 +129,13 @@
         <%= render partial: 'shared/accordion_panel', locals: {:p_title => t('aspace_content_warnings'), :p_id => 'aspace_content_warnings_list', :p_body => x} %>
       <% end %>
       <% unless @result.raw['inherited_content_warnings_u_sstr'].blank? %>
+        <%
+          if AppConfig[:aspace_content_warnings]['general_only'] == true
+            inherited_tags = ASUtils.json_parse(@result.raw['inherited_content_warnings_u_sstr'].first)
+            inherited_tags['tags'] = [t('enumerations.content_warning_code.cw_general')]
+            @result.raw['inherited_content_warnings_u_sstr'] = [ASUtils.to_json(inherited_tags)]
+          end
+        %>
         <script>
           setupIheritedContentWarnings(<%=raw @result.raw['inherited_content_warnings_u_sstr'].first %>, '<%=raw content_warnings_ext_link %>');
         </script>

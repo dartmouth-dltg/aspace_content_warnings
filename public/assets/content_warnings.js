@@ -7,6 +7,7 @@ function setupContentWarnings(content_warnings, ext_link) {
 }
 
 function setupIheritedContentWarnings(obj, ext_link) {
+  console.log(obj);
   var $inherited_tags = $('<div class="content-warnings inherited-content-warnings"><div class="inherited-content-warning-prefix">Applied at the <a href="' + obj.uri + '">' + obj.level + '</a> level</div></div>');
   applyContentWarnings(obj.tags, $inherited_tags, ext_link);
 }

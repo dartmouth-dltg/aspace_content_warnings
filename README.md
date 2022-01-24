@@ -47,19 +47,21 @@ cw_racism: Racist Content
 
 ## Configuration
 
-This plugin accepts three configuration options. One controls the visibility of Content Warnings
+This plugin accepts four configuration options. One controls the visibility of Content Warnings
 as facets in the staff application and the visibility of Content Warnings
 as facets in the PUI. Set either `staff_faceting` or `public_faceting` to `true` to
-enable Content Warnings facets in that area.
+enable Content Warnings facets in that area. Another option `general_only` can be set to true to disable
+specific warning tags in the PUI and display only the general warning in the PUI.
 
 ```
 AppConfig[:aspace_content_warnings] = {
   'staff_faceting' => true,
-  'public_faceting' => true
+  'public_faceting' => true,
+  'general_only' => true
 }
 ```
 
-The second configuration option specifies a link to an external site that explains the use of the
+The third configuration option specifies a link to an external site that explains the use of the
 content warnings if your institution provides that information. Set
 
 ```
@@ -69,7 +71,7 @@ AppConfig[:aspace_content_warnings_external_link]
 to any valid URL. The link will appear below any tags with language specified by the value set in
 the `aspace_content_warnings_more_info` locales key.
 
-The third configuration option adds a form to collect proposals for additional content warning tags.
+The fourth configuration option adds a form to collect proposals for additional content warning tags.
 It relies on the request form mechanism to a large extent and requires that the same AppConfig
 settings regarding emails for the PUI be set. Set
 
