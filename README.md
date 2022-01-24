@@ -125,7 +125,7 @@ will be displayed in the PUI for direct and inherited tags.
 
 ### PUI PDF Export
 
-The PUI PDF exports have also been modified to include the **directly** applied tags. Inhertied tags
+The PUI PDF exports have also been modified to include the **directly** applied tags. Inherited tags
 are **not** included in the pdf export.
 
 A sample PUI pdf export is included in the `sample_exports` directory.
@@ -146,6 +146,8 @@ en:
     content_warning_code:
       cw_new: New Content Warning (Example)    
 ```
+
+In this example, 'new' should be a descriptive name for the type of content.
 
 To add a new default description, edit `frontend/locales/en.yml` and add a new `key:value` pair
 to
