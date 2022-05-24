@@ -137,7 +137,7 @@ To add new content warnings, admin users should edit the controlled value list.
 System Menu - Controlled Value Lists - Content Warnings
 ```
 
-In addition the locales should be updated with new translations for the warning label an the default
+In addition the locales should be updated with new translations for the warning label and the default
 description associated with the tag. To edit the label translation, please edit
 `frontend/locales/enumeratons.en.yml` and add a new `key:value` pair to
 ```
