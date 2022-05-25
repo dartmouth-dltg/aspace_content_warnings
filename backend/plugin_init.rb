@@ -1,0 +1,1 @@
+require_relative 'lib/aspace_content_warnings_ead'

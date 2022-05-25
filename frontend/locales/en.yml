@@ -13,6 +13,7 @@ en:
   content_warning:
     content_warning_code: Content Warning Type
     description: Description
+    section_title: Content Warning(s)
 
   enumeration_names:
     content_warning_code: Content Warning Type
