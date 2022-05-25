@@ -139,7 +139,7 @@ System Menu - Controlled Value Lists - Content Warnings
 
 In addition the locales should be updated with new translations for the warning label and the default
 description associated with the tag. To edit the label translation, please edit
-`frontend/locales/enumeratons.en.yml` and add a new `key:value` pair to
+`frontend/locales/enumerations.en.yml` and add a new `key:value` pair to
 ```
 en:
   enumerations:
@@ -166,17 +166,26 @@ and digital object).
 
 ## Staff EAD & PDF Exports Note
 
-Note that this plugin does not (YET!) include the content warnings in the staff side EAD & PDF
-exports.
+EAD, EAD3, and pdf exports include sections with any applied content warnings.
 
-## PUI Note
+## Core Overrides
 
-This plugin overrides
+This plugin overrides several methods related to EAD & EAD3 export. If you have modified these or
+are using plugins that also modify these methods, you will need to reconcile them. Specifically
 
+```
+    EADSerializer::stream
+    EADSerializer::serialize_child
+    EAD3Serializer::stream
+    EAD3Serializer::serialize_child
+```    
+
+This plugin also overrides the following views
+```
     /public/views/pdf/_resource.html.erb
     /public/views/pdf/_archival_object.html.erb
     /public/views/shared/_record_innards.html.erb
-
+```
 If you are using other plugins which override the same files, you will need to reconcile
 them.
 
