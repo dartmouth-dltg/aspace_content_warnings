@@ -40,7 +40,7 @@ class IndexerCommon
     end
     if doc['inherited_content_warnings_u_sstr'].empty?
       if parent['parent']
-        get_parent_content_warnigns(parent['parent']['ref'], doc)
+        get_parent_content_warnings(parent['parent']['ref'], doc)
       elsif parent['resource']
         get_parent_content_warnings(parent['resource']['ref'], doc)
       end
