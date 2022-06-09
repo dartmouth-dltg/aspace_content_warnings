@@ -296,38 +296,35 @@ class EAD3Serializer < EADSerializer
 
               EADSerializer.run_serialize_step(data, xml, @fragments, :did)
 
-          # This is it. The patch. All one line of it
-          serialize_aspace_content_warnings_ead3(data, xml, @fragments)
-          # end the patch
 
-          # Change from EAD 2002: dao must be children of did in EAD3, not archdesc
-           data.digital_objects.each do |dob|
-             serialize_digital_object(dob, xml, @fragments)
-           end
+              # Change from EAD 2002: dao must be children of did in EAD3, not archdesc
+              data.digital_objects.each do |dob|
+               serialize_digital_object(dob, xml, @fragments)
+              end
 
-         }# </did>
+            }# </did>
 
-         serialize_nondid_notes(data, xml, @fragments)
+            serialize_nondid_notes(data, xml, @fragments)
 
-         serialize_bibliographies(data, xml, @fragments)
+            serialize_bibliographies(data, xml, @fragments)
 
-         serialize_indexes(data, xml, @fragments)
+            serialize_indexes(data, xml, @fragments)
 
-         serialize_controlaccess(data, xml, @fragments)
+            serialize_controlaccess(data, xml, @fragments)
 
-         EADSerializer.run_serialize_step(data, xml, @fragments, :archdesc)
+            EADSerializer.run_serialize_step(data, xml, @fragments, :archdesc)
 
-         xml.dsc {
+            xml.dsc {
 
-           data.children_indexes.each do |i|
-             xml.text( @stream_handler.buffer {
-               |xml, new_fragments| serialize_child(data.get_child(i), xml, new_fragments)
-               }
-             )
-           end
-         }
-       }
-     }
+             data.children_indexes.each do |i|
+               xml.text( @stream_handler.buffer {
+                 |xml, new_fragments| serialize_child(data.get_child(i), xml, new_fragments)
+                 }
+               )
+             end
+            }
+          }
+        }
 
       rescue => e
         xml.text "ASPACE EXPORT ERROR : YOU HAVE A PROBLEM WITH YOUR EXPORT OF YOUR RESOURCE. THE FOLLOWING INFORMATION MAY HELP:\n
