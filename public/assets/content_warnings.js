@@ -13,7 +13,7 @@ function setupInheritedContentWarnings(obj, ext_link) {
 
 function applyContentWarnings(content_warnings, tag_wrapper, ext_link) {
   $.each(content_warnings, function(idx, val) {
-    tag_wrapper.append('<span>' + val + '</span>');
+    tag_wrapper.append('<span class="cw-tag"><span class="cw-text">' + val + '</span></span>');
   });
   if (ext_link != '') {
     tag_wrapper.append('<div class="content-warning-external-link">' + ext_link + '</div>');
@@ -70,7 +70,7 @@ function contentWarningForm(text) {
 }
 
 $().ready(function() {
-  $('.content-warnings span').click(function() {
+  $('.content-warnings').not('.inherited-content-warnings').children('span').click(function() {
     if ($('a[href="#aspace_content_warnings_list"]').attr('aria-expanded') == "false") {
       $('a[href="#aspace_content_warnings_list"]').click();
     }
