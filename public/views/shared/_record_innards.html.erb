@@ -127,7 +127,7 @@
       <% end %>
       <% unless @result.raw['inherited_content_warnings_u_sstr'].blank? %>
         <%
-          if AppConfig[:aspace_content_warnings]['general_only'] == true
+          if AppConfig.has_key?(:aspace_content_warnings) && AppConfig[:aspace_content_warnings]['general_only'] == true
             inherited_tags = ASUtils.json_parse(@result.raw['inherited_content_warnings_u_sstr'].first)
             inherited_tags['tags'] = [t('enumerations.content_warning_code.cw_general')]
             @result.raw['inherited_content_warnings_u_sstr'] = [ASUtils.to_json(inherited_tags)]
