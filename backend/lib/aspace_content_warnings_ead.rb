@@ -303,16 +303,16 @@ class EAD3Serializer < EADSerializer
 
               EADSerializer.run_serialize_step(data, xml, @fragments, :did)
 
-              # This is it. The patch. All one line of it
-              serialize_aspace_content_warnings_ead3(data, xml, @fragments)
-              # end the patch
-
               # Change from EAD 2002: dao must be children of did in EAD3, not archdesc
               data.digital_objects.each do |dob|
                 serialize_digital_object(dob, xml, @fragments)
               end
 
             }# </did>
+
+            # This is it. The patch. All one line of it
+            serialize_aspace_content_warnings_ead3(data, xml, @fragments)
+            # end the patch
 
             serialize_nondid_notes(data, xml, @fragments)
 
