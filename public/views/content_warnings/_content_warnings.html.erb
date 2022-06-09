@@ -1,6 +1,6 @@
 <ul class="aspace-content-warnings-list">
   <% content_warning_tags = [] %>
-  <% if AppConfig[:aspace_content_warnings]['general_only'] %>
+  <% if AppConfig.has_key?(:aspace_content_warnings) && AppConfig[:aspace_content_warnings]['general_only'] %>
     <% content_warning_tags << "#{t('enumerations.content_warning_code.cw_general')}" %>
     <li>
       <span class="aspace-content-warning-title">
