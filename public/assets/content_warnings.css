@@ -37,7 +37,7 @@
 }
 
 .inherited-content-warning-prefix {
-  display: inline;
+  display: block;
   margin-right: 0.5rem;
 }
 
