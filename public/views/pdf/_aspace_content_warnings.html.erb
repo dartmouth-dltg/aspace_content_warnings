@@ -10,7 +10,7 @@
           <%= cw_description %>
         </p>
       </li>
-  <% 
+  <%
     else
       Array(record.json['content_warnings']).each do |cw| %>
         <li>
@@ -28,7 +28,7 @@
             </p>
         </li>
   <%
-        end
       end
+    end
   %>
 </ul>

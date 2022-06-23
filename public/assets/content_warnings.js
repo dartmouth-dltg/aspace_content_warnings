@@ -1,29 +1,37 @@
 // content warnings
 function setupContentWarnings(content_warnings, ext_link) {
   if (content_warnings.length > 0) {
-    var $content_warnings = $('<div class="content-warnings"></div>');
-    applyContentWarnings(content_warnings, $content_warnings, ext_link);
+    var content_warnings_wrapper = $('<div class="content-warnings"></div>');
+    applyContentWarnings(content_warnings, content_warnings_wrapper, ext_link);
   }
 }
 
 function setupInheritedContentWarnings(obj, ext_link) {
-  var $inherited_tags = $('<div class="content-warnings inherited-content-warnings"><div class="inherited-content-warning-prefix">Applied at the <a href="' + obj.uri + '">' + obj.level + '</a> level</div></div>');
-  applyContentWarnings(obj.tags, $inherited_tags, ext_link);
+  var inherited_tags_wrapper = $('<div class="content-warnings inherited-content-warnings"><div class="inherited-content-warning-prefix">Applied at the <a href="' + obj.uri + '">' + obj.level + '</a> level</div></div>');
+  applyContentWarnings(obj.tags, inherited_tags_wrapper, ext_link);
 }
 
 function applyContentWarnings(content_warnings, tag_wrapper, ext_link) {
   $.each(content_warnings, function(idx, val) {
     tag_wrapper.append('<span class="cw-tag"><span class="cw-text">' + val + '</span></span>');
   });
-  if (ext_link != '') {
-    tag_wrapper.append('<div class="content-warning-external-link">' + ext_link + '</div>');
-  }
   $('#main-content h1').after(tag_wrapper);
+  if (ext_link != '') {
+    tag_wrapper.after('<div class="content-warning-external-link">' + ext_link + '</div>');
+  }
 }
 
 function setupContentWarningSubmit(modalId, text) {
   $(".noscript").hide();
-  $('#main-content h1').after('<button id="content-warning-sub" class="btn btn-success content-warning-submit"><i class="fa fa-paper-plane"></i>&nbsp;Help us add a Content Warning</button>');
+  var target = $('#main-content h1');
+  if ($('.content-warnings').length > 0 ) {
+    target = $('.content-warnings');
+  }
+  else if ($('.content-warning-external-link').length > 0) {
+    target = $('.content-warning-external-link');
+  }
+console.log(target)
+  target.after('<button id="content-warning-sub" class="btn btn-primary content-warning-submit"><i class="fa fa-paper-plane"></i>&nbsp;Help us add a Content Warning</button>');
   $('#main-content').on('click', '#content-warning-sub', function(e) {
     e.preventDefault();
     contentWarningForm(text);

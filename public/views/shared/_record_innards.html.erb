@@ -101,18 +101,6 @@
 
   	<!-- begin aspace_content_warnings addition -->
     <% if AppConfig[:plugins].include?('aspace_content_warnings') %>
-      <% content_warnings_allow_pui_submit = false %>
-      <% unless AppConfig[:aspace_content_warnings_allow_pui_submit].nil? %>
-        <% if defined?(@request) && !@request.nil? %>
-          <% public_submit_content_warning = render partial: 'content_warnings/submit_content_warning' %>
-          <%= render partial: 'shared/modal', locals: {:modal_id => 'content_warning_submit_modal', :title => t('aspace_content_warnings_public_submit'),
-              :modal_body => public_submit_content_warning } %>
-          <% content_warnings_allow_pui_submit = true %>
-          <script>
-            setupContentWarningSubmit("submit_content_warning_modal",  "<%= t('aspace_content_warnings_submit_btn') %>")
-          </script>
-        <% end %>
-      <% end %>
       <%
         # check to see if an external link has been set
         if AppConfig[:aspace_content_warnings_external_link].nil?
@@ -136,6 +124,18 @@
         <script>
           setupInheritedContentWarnings(<%=raw @result.raw['inherited_content_warnings_u_sstr'].first %>, '<%=raw content_warnings_ext_link %>');
         </script>
+      <% end %>
+      <% content_warnings_allow_pui_submit = false %>
+      <% unless AppConfig[:aspace_content_warnings_allow_pui_submit].nil? %>
+        <% if defined?(@request) && !@request.nil? %>
+          <% public_submit_content_warning = render partial: 'content_warnings/submit_content_warning' %>
+          <%= render partial: 'shared/modal', locals: {:modal_id => 'content_warning_submit_modal', :title => t('aspace_content_warnings_public_submit'),
+              :modal_body => public_submit_content_warning } %>
+          <% content_warnings_allow_pui_submit = true %>
+          <script>
+            setupContentWarningSubmit("submit_content_warning_modal",  "<%= t('aspace_content_warnings_submit_btn') %>")
+          </script>
+        <% end %>
       <% end %>
 
     <% end %>
