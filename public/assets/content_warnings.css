@@ -1,3 +1,8 @@
+
+.content-warnings {
+  display: inline-block;
+}
+
 .content-warnings .cw-tag {
   display: inline-block;
   margin: 0 0.5em 0.25em 0;
@@ -66,6 +71,8 @@
 
 .content-warning-external-link {
   display: inline-block;
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
   font-style: italic;
 }
 
@@ -74,6 +81,10 @@
   margin-right: 0.25em;
   font-family: FontAwesome;
   font-style: normal;
+}
+
+#content-warning-sub {
+  margin-right: 0.5rem;
 }
 
 .offensive-content-submit {
