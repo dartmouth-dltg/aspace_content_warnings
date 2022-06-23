@@ -85,7 +85,9 @@ enabled.
 
 ## Using the Plugin
 
-The plugin adds a new sub record to Accessions, Resources, Archival Objects, and Digital Objects.
+The plugin adds a new sub record to Accessions, Resources, Archival Objects, Digital Objects, 
+and Digital Object Components (WIP).
+
 The new sub record allows staff users to select a type of content warning and optionally a
 clarifying description of why the warning has been applied. Any number of warnings can be applied.
 
@@ -126,7 +128,7 @@ will be displayed in the PUI for direct and inherited tags.
 ### PUI PDF Export
 
 The PUI PDF exports have also been modified to include the **directly** applied tags. Inherited tags
-are **not** included in the pdf export.
+are **not** included in the pdf export. Note: WIP for Digital Objects and Digital Object Components.
 
 A sample PUI pdf export is included in the `sample_exports` directory.
 
@@ -160,13 +162,14 @@ en:
 
 ## Reports
 
-The plugin adds an additional report that gathers information about the content warnings applied. The
+(WIP) The plugin adds an additional report that gathers information about the content warnings applied. The
 report includes the warning and any associated primary type (resource, accession, archival object,
-and digital object).
+digital object, and digital object component).
 
 ## Staff EAD & PDF Exports Note
 
-EAD, EAD3, and pdf exports include sections with any applied content warnings.
+EAD, EAD3, and pdf exports include sections with any applied content warnings. 
+Note: WIP for Digital Objects and Digital Object Components.
 
 ## Core Overrides
 

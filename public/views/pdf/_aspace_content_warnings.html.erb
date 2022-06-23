@@ -1,18 +1,34 @@
 <ul style="list-style: none;">
-<% Array(record.json['content_warnings']).each do |cw| %>
-    <li>
-     <%
-        cw_title = "#{t('enumerations.content_warning_code.' + cw['content_warning_code'], default: cw['content_warning_code'].nil? ? '' : cw['content_warning_code'])}"
-        if cw['description'].nil?
-          cw_description = t('content_warning_description.' + cw['content_warning_code'], default: cw['content_warning_code'].nil? ? '' : cw['content_warning_code'])
-        else
-          cw_description = process_mixed_content(cw['description']).html_safe
-        end
-      %>
+  <%
+    if AppConfig.has_key?(:aspace_content_warnings) && AppConfig[:aspace_content_warnings]['general_only'] == true
+      cw_title = "#{t('enumerations.content_warning_code.cw_general')}"
+      cw_description = "#{t('content_warning_description.cw_general')}"
+  %>
+      <li>
         <span style="font-weight: bold;"><%= cw_title %></span>
         <p>
           <%= cw_description %>
         </p>
-    </li>
-<% end %>
+      </li>
+  <% 
+    else
+      Array(record.json['content_warnings']).each do |cw| %>
+        <li>
+         <%
+            cw_title = "#{t('enumerations.content_warning_code.' + cw['content_warning_code'], default: cw['content_warning_code'].nil? ? '' : cw['content_warning_code'])}"
+            if cw['description'].nil?
+              cw_description = t('content_warning_description.' + cw['content_warning_code'], default: cw['content_warning_code'].nil? ? '' : cw['content_warning_code'])
+            else
+              cw_description = process_mixed_content(cw['description']).html_safe
+            end
+          %>
+            <span style="font-weight: bold;"><%= cw_title %></span>
+            <p>
+              <%= cw_description %>
+            </p>
+        </li>
+  <%
+        end
+      end
+  %>
 </ul>

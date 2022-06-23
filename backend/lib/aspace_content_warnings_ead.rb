@@ -211,17 +211,24 @@ class EADSerializer < ASpaceExport::Serializer
           xml.head {
             sanitize_mixed_content(I18n.t("content_warning.section_title") , xml, fragments)
           }
-          data.content_warnings.each do |cw|
-            cw_type = cw['content_warning_code']
-            if cw['description']
-              cw_description = cw['description']
-            else
-              cw_description = I18n.t("content_warning_description.#{cw_type}")
-            end
-            cw_text = I18n.t("enumerations.content_warning_code.#{cw_type}") + ": " + cw_description
+          if AppConfig.has_key?(:aspace_content_warnings) && AppConfig[:aspace_content_warnings]['general_only'] == true
+            cw_text = I18n.t("enumerations.content_warning_code.cw_general") + ": " + I18n.t("content_warning_description.cw_general")
             xml.p {
               sanitize_mixed_content(cw_text , xml, fragments)
             }
+          else
+            data.content_warnings.each do |cw|
+              cw_type = cw['content_warning_code']
+              if cw['description']
+                cw_description = cw['description']
+              else
+                cw_description = I18n.t("content_warning_description.#{cw_type}")
+              end
+              cw_text = I18n.t("enumerations.content_warning_code.#{cw_type}") + ": " + cw_description
+              xml.p {
+                sanitize_mixed_content(cw_text , xml, fragments)
+              }
+            end
           end
           }
       end
@@ -456,17 +463,24 @@ class EAD3Serializer < EADSerializer
           xml.head {
             sanitize_mixed_content(I18n.t("content_warning.section_title") , xml, fragments)
           }
-          data.content_warnings.each do |cw|
-            cw_type = cw['content_warning_code']
-            if cw['description']
-              cw_description = cw['description']
-            else
-              cw_description = I18n.t("content_warning_description.#{cw_type}")
-            end
-            cw_text = I18n.t("enumerations.content_warning_code.#{cw_type}") + ": " + cw_description
+          if AppConfig.has_key?(:aspace_content_warnings) && AppConfig[:aspace_content_warnings]['general_only'] == true
+            cw_text = I18n.t("enumerations.content_warning_code.cw_general") + ": " + I18n.t("content_warning_description.cw_general")
             xml.p {
               sanitize_mixed_content(cw_text , xml, fragments)
             }
+          else
+            data.content_warnings.each do |cw|
+              cw_type = cw['content_warning_code']
+              if cw['description']
+                cw_description = cw['description']
+              else
+                cw_description = I18n.t("content_warning_description.#{cw_type}")
+              end
+              cw_text = I18n.t("enumerations.content_warning_code.#{cw_type}") + ": " + cw_description
+              xml.p {
+                sanitize_mixed_content(cw_text , xml, fragments)
+              }
+            end
           end
           }
       end

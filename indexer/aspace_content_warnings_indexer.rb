@@ -4,7 +4,7 @@ class IndexerCommon
   add_indexer_initialize_hook do |indexer|
     if AppConfig[:plugins].include?('aspace_content_warnings')
       indexer.add_document_prepare_hook {|doc, record|
-        if ['accession','resource', 'archival_object', 'digital_object'].include?(doc['primary_type']) && record['record']['content_warnings']
+        if ['accession','resource', 'archival_object', 'digital_object', 'digital_object_component'].include?(doc['primary_type']) && record['record']['content_warnings']
           content_warnings = record['record']['content_warnings']
           doc['content_warnings_u_sstr'] = []
           doc['content_warnings_code_u_sstr'] = []
@@ -29,7 +29,7 @@ class IndexerCommon
       }
     end
   end
-  
+
   def self.get_parent_content_warnings(uri, doc)
     tags = []
     parent = JSONModel::HTTP.get_json(uri)

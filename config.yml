@@ -12,3 +12,6 @@ parents:
   digital_object:
     name: content_warnings
     cardinality: zero_to_many
+  digital_object_component:
+    name: content_warnings
+    cardinality: zero_to_many
