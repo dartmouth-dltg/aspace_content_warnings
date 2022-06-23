@@ -8,12 +8,13 @@ class IndexerCommon
           content_warnings = record['record']['content_warnings']
           doc['content_warnings_u_sstr'] = []
           doc['content_warnings_code_u_sstr'] = []
+          doc['content_warnings_general_u_sbool'] = true
           content_warnings.each do |cw|
             doc['content_warnings_code_u_sstr'] << cw['content_warnings_code']
             doc['content_warnings_u_sstr'] << I18n.t('enumerations.content_warning_code.' + cw['content_warning_code'])
           end
         end
-        
+
         if doc['primary_type'] == 'archival_object'
           doc['inherited_content_warnings_u_sstr'] = []
           # only check if the object is not already tagged

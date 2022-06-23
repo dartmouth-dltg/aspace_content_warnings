@@ -11,4 +11,5 @@ en:
 
   search_results:
     filter:
-      content_warnings_u_sstr: May Contain Content that is Harmful
+      content_warnings_u_sstr: May Contain Harmful Content
+      content_warnings_general_u_sbool: May Contain Harmful Content
