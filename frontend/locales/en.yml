@@ -1,34 +1,34 @@
 en:
   plugins:
     aspace_content_warnings:
-      _plural: Content Warnings
-      _singular: Content Warning
+      _plural: Harmful Content
+      _singular: Harmful Content
     content_warning:
-      _plural: Content Warnings
-      _singular: Content Warning
+      _plural: Harmful Content
+      _singular: Harmful Content
       _frontend:
         action:
-          add: Add Content Warning
+          add: Add Harmful Content Warning
 
   content_warning:
-    content_warning_code: Content Warning Type
+    content_warning_code: Harmful Content Type
     description: Description
-    section_title: Content Warning(s)
+    section_title: May Contain Harmful Content
 
   enumeration_names:
-    content_warning_code: Content Warning Type
+    content_warning_code: Harmful Content Type
 
   advanced_search:
     enum:
-      content_warning_code: Content Warning Type
+      content_warning_code: Harmful Content Type
     text:
-     content_warnings_u_sstr: Content Warning Type
+     content_warnings_u_sstr: Harmful Content Type
 
   reports:
     content_warnings_list_report:
-      title: Content Warnings List Report
+      title: Harmful Content List Report
       description: >
-        List all Content Warnings and associated Accessions, Resources, Archival Objects, and Digital Objects.
+        List all Harmful Content tags and associated Accessions, Resources, Archival Objects, and Digital Objects.
 
   search:
     multi:

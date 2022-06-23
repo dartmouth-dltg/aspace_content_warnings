@@ -21,7 +21,7 @@ function applyContentWarnings(content_warnings, tag_wrapper, ext_link) {
   }
 }
 
-function setupContentWarningSubmit(modalId, text) {
+function setupContentWarningSubmit(modalId, text, btnText) {
   $(".noscript").hide();
   var target = $('#main-content h1');
   if ($('.content-warnings').length > 0 ) {
@@ -30,8 +30,8 @@ function setupContentWarningSubmit(modalId, text) {
   else if ($('.content-warning-external-link').length > 0) {
     target = $('.content-warning-external-link');
   }
-console.log(target)
-  target.after('<button id="content-warning-sub" class="btn btn-primary content-warning-submit"><i class="fa fa-paper-plane"></i>&nbsp;Help us add a Content Warning</button>');
+
+  target.after('<button id="content-warning-sub" class="btn btn-primary content-warning-submit"><i class="fa fa-paper-plane"></i>&nbsp;' + btnText + '</button>');
   $('#main-content').on('click', '#content-warning-sub', function(e) {
     e.preventDefault();
     contentWarningForm(text);
