@@ -162,7 +162,7 @@ en:
 
 ## Reports
 
-(WIP) The plugin adds an additional report that gathers information about the content warnings applied. The
+The plugin adds an additional report that gathers information about the content warnings applied. The
 report includes the warning and any associated primary type (resource, accession, archival object,
 digital object, and digital object component).
 
