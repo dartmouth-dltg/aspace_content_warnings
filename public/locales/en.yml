@@ -1,9 +1,10 @@
 en:
   aspace_content_warnings: May Contain Harmful Content
   aspace_content_warnings_more_info: Why we use these tags
-  aspace_content_warnings_email_to: " - Content Warnings Submission"
+  aspace_content_warnings_email_to: " - Harmful Content Submission"
   aspace_content_warnings_submit_btn: Submit
-  aspace_content_warnings_public_submit: Submit Content Warning(s)
+  aspace_content_warnings_submit_btn_text: Help us add a Harmful Content Warning
+  aspace_content_warnings_public_submit: Submit Harmful Content Warning(s)
   aspace_content_warnings_submit_note: Please tell us if you feel this content may be harmful and why.
 
   pdf_reports:
