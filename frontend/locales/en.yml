@@ -33,7 +33,8 @@ en:
   search:
     multi:
       title_sort: Title
-      content_warnings_u_sstr: Content Warning Type
+      content_warnings_u_sstr: May Contain Harmful Content
+      content_warnings_general_u_sbool: May Contain Harmful Content
 
   content_warning_description:
     # adult

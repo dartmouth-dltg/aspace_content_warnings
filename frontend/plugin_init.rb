@@ -4,11 +4,15 @@ ArchivesSpace::Application.config.after_initialize do
     SearchResultData.class_eval do
       self.singleton_class.send(:alias_method, :BASE_FACETS_pre_content_warnings, :BASE_FACETS)
       def self.BASE_FACETS
-        self.BASE_FACETS_pre_content_warnings << "content_warnings_u_sstr"
+        if AppConfig[:aspace_content_warnings]['general_only'] == true
+          self.BASE_FACETS_pre_content_warnings << "content_warnings_general_u_sbool"
+        else
+          self.BASE_FACETS_pre_content_warnings << "content_warnings_u_sstr"
+        end
       end
     end
   end
-  
+
   JSONModel(:content_warning)
 
 end
