@@ -1,2 +1,12 @@
 <%= javascript_include_tag "#{AppConfig[:public_proxy_prefix]}assets/content_warnings.js" %>
 <%= stylesheet_link_tag "#{AppConfig[:public_proxy_prefix]}assets/content_warnings.css" %>
+
+<% if AppConfig[:plugins].include?('aspace_content_warnings') %>
+  <% if AppConfig.has_key?(:aspace_content_warnings_pui_statement) && AppConfig[:aspace_content_warnings_pui_statement] %>
+    <% if AppConfig.has_key?(:aspace_content_warnings_external_link) && AppConfig[:aspace_content_warnings_external_link].length > 0 %>
+      <script>
+        addHeaderLinkToHCStatement('<%= t("aspace_content_warnings_general_hc_statement_html", :link => AppConfig[:aspace_content_warnings_external_link])%>')
+      </script>
+    <% end %>
+  <% end %>
+<% end %>
