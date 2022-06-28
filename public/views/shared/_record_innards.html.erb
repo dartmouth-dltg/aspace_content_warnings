@@ -103,7 +103,9 @@
     <% if AppConfig[:plugins].include?('aspace_content_warnings') %>
       <%
         # check to see if an external link has been set
-        if AppConfig[:aspace_content_warnings_external_link].nil?
+        if AppConfig[:aspace_content_warnings_external_link].nil? || AppConfig[:aspace_content_warnings_external_link].length == 0
+          content_warnings_ext_link = ''
+        elsif AppConfig.has_key?(:aspace_content_warnings_pui_statement) && AppConfig[:aspace_content_warnings_pui_statement]
           content_warnings_ext_link = ''
         else
           content_warnings_ext_link = '<a href="' + AppConfig[:aspace_content_warnings_external_link] + '">' + t('aspace_content_warnings_more_info', default: 'Why we use these tags.') + '</a>'
