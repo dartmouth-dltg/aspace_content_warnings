@@ -2,6 +2,7 @@ en:
   aspace_content_warnings: May Contain Harmful Content
   aspace_content_warnings_more_info: Why we use these tags
   aspace_content_warnings_email_to: " - Harmful Content Submission"
+  aspace_content_warnings_general_hc_statement_html: 'Please read our <a href="%{link}">statement on potentially harmful content</a>'
   aspace_content_warnings_submit_btn: Submit
   aspace_content_warnings_submit_btn_text: Help us add a Harmful Content Warning
   aspace_content_warnings_public_submit: Submit Harmful Content Warning(s)

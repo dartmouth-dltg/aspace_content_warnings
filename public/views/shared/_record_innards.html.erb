@@ -138,6 +138,12 @@
         <% end %>
       <% end %>
 
+      <% if AppConfig.has_key?(:aspace_content_warnings_pui_statement) && AppConfig[:aspace_content_warnings_pui_statement] && content_warnings_ext_link.length > 0 %>
+        <script>
+          addHeaderLinkToHCStatement('<%= t("aspace_content_warnings_general_hc_statement_html", :link => AppConfig[:aspace_content_warnings_external_link])%>')
+        </script>
+      <% end %>
+
     <% end %>
   	<!-- end aspace_content_warnings addition -->
 
