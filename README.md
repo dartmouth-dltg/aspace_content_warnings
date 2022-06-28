@@ -61,7 +61,7 @@ AppConfig[:aspace_content_warnings] = {
 }
 ```
 
-The third configuration option specifies a link to an external site that explains the use of the
+The second configuration option specifies a link to an external site that explains the use of the
 content warnings if your institution provides that information. Set
 
 ```
@@ -71,7 +71,7 @@ AppConfig[:aspace_content_warnings_external_link]
 to any valid URL. The link will appear below any tags with language specified by the value set in
 the `aspace_content_warnings_more_info` locales key.
 
-The fourth configuration option adds a form to collect proposals for additional content warning tags.
+The third configuration option adds a form to collect proposals for additional content warning tags.
 It relies on the request form mechanism to a large extent and requires that the same AppConfig
 settings regarding emails for the PUI be set. Set
 
@@ -79,6 +79,15 @@ settings regarding emails for the PUI be set. Set
 AppConfig[:aspace_content_warnings_allow_pui_submit] = true
 ```
 to enable the form on objects that allow requests.
+
+The fourth option adds a header to every PUI page with a link to your institutions harmful content
+policy or statement. Set
+
+```
+AppConfig[:aspace_content_warnings_pui_statement] = true
+```
+
+to enable this header.
 
 See the PUI images below for examples of how these would appear in the PUI with the config options
 enabled.
@@ -119,6 +128,9 @@ Example Statement for an inherited tag: `Applied at the Series level: {TAG}`
 
 ### PUI Tag Section - Inherited Tags
 ![PUI - Object with inherited tags](readme_images/ContentWarning-PUI-child-object-showing-inheritance.png)
+
+### PUI Link to Policy or Statement
+![readme_images/ContentWarnings_PUI_Header_statement.png](readme_images/ContentWarnings_PUI_Header_statement.png)
 
 ### PUI - General Tag Only Configuration
 
