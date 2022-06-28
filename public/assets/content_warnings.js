@@ -7,15 +7,19 @@ function setupContentWarnings(content_warnings, ext_link) {
 }
 
 function setupInheritedContentWarnings(obj, ext_link) {
-  var inherited_tags_wrapper = $('<div class="content-warnings inherited-content-warnings"><div class="inherited-content-warning-prefix">Applied at the <a href="' + obj.uri + '">' + obj.level + '</a> level</div></div>');
-  applyContentWarnings(obj.tags, inherited_tags_wrapper, ext_link);
+  var inherited_prefix = '<div class="inherited-content-warning-prefix">Applied at the <a href="' + obj.uri + '">' + obj.level + '</a> level</div>';
+  var inherited_tags_wrapper = $('<div class="content-warnings inherited-content-warnings"></div>');
+  applyContentWarnings(obj.tags, inherited_tags_wrapper, ext_link, inherited_prefix);
 }
 
-function applyContentWarnings(content_warnings, tag_wrapper, ext_link) {
+function applyContentWarnings(content_warnings, tag_wrapper, ext_link, prefix = null) {
   $.each(content_warnings, function(idx, val) {
     tag_wrapper.append('<span class="cw-tag"><span class="cw-text">' + val + '</span></span>');
   });
   $('#main-content h1').after(tag_wrapper);
+  if (prefix != null) {
+    $('#main-content h1').after(prefix);
+  }
   if (ext_link != '') {
     tag_wrapper.after('<div class="content-warning-external-link">' + ext_link + '</div>');
   }
