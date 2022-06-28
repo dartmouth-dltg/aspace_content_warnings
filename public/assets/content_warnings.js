@@ -26,7 +26,9 @@ function applyContentWarnings(content_warnings, tag_wrapper, ext_link, prefix = 
 }
 
 function addHeaderLinkToHCStatement(stmnt) {
-  $('#content').prepend('<div class="harmful-content-header">' + stmnt + '</div>');
+  $().ready(function() {
+    $('#content').prepend('<div class="harmful-content-header">' + stmnt + '</div>');
+  });
 }
 
 function setupContentWarningSubmit(modalId, text, btnText) {
