@@ -10,6 +10,7 @@ en:
 
   pdf_reports:
     content_warnings_heading: May Contain Harmful Content
+    do_content_warnings_heading: Related Digital Object May Contain Harmful Content
 
   search_results:
     filter:

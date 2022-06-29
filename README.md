@@ -204,8 +204,10 @@ are using plugins that also modify these methods, you will need to reconcile the
 ```
     EADSerializer::stream
     EADSerializer::serialize_child
+    EADSerializer::serialize_digital_object
     EAD3Serializer::stream
     EAD3Serializer::serialize_child
+    EAD3Serializer::serialize_digital_object
 ```    
 
 This plugin also overrides the following views
