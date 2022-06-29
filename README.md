@@ -47,7 +47,7 @@ cw_racism: Racist Content
 
 ## Configuration
 
-This plugin accepts four configuration options. One controls the visibility of Content Warnings
+This plugin accepts five configuration options. One controls the visibility of Content Warnings
 as facets in the staff application and the visibility of Content Warnings
 as facets in the PUI. Set either `staff_faceting` or `public_faceting` to `true` to
 enable Content Warnings facets in that area. Another option `general_only` can be set to true to disable
@@ -88,6 +88,19 @@ AppConfig[:aspace_content_warnings_pui_statement] = true
 ```
 
 to enable this header.
+
+The fifth configuration option allows you to specify the note type used for the EAD/EAD3 exports.
+Set
+
+```
+AppConfig[:aspace_content_warnings_note_type] = 'odd'
+```
+or
+```
+AppConfig[:aspace_content_warnings_note_type] = 'scopecontent'
+```
+
+Defaults to `odd`.
 
 See the PUI images below for examples of how these would appear in the PUI with the config options
 enabled.
