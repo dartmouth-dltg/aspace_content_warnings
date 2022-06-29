@@ -153,7 +153,8 @@ will be displayed in the PUI for direct and inherited tags.
 ### PUI PDF Export
 
 The PUI PDF exports have also been modified to include the **directly** applied tags. Inherited tags
-are **not** included in the pdf export. Note: WIP for Digital Objects and Digital Object Components.
+are **not** included in the pdf export. Digital Object Components are not included in PUI PDFs. Digital
+Object tags are only included if one or more file versions are present in the pdf.
 
 A sample PUI pdf export is included in the `sample_exports` directory.
 
@@ -193,8 +194,8 @@ digital object, and digital object component).
 
 ## Staff EAD & PDF Exports Note
 
-EAD, EAD3, and pdf exports include sections with any applied content warnings. 
-Note: WIP for Digital Objects and Digital Object Components.
+EAD, EAD3, and pdf exports include sections with any applied content warnings. Digital Object Components
+are not included in exports.
 
 ## Core Overrides
 
