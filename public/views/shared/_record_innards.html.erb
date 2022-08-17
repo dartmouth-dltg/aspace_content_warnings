@@ -72,9 +72,11 @@
                                                              :p_id => 'classifications_list', :p_body => x} %>
     <% end %>
     <% unless @result.agents.blank? %>
-      <% x= render partial: 'shared/agents_list', locals: {:list => @result.agents} %>
-      <%= render partial: 'shared/accordion_panel', locals: {:p_title =>  t('pui_agent.related'),
-         :p_id => 'agent_list', :p_body => x} %>
+      <%# ANW-1095: don't show creators in related names section since it is redundant %>
+      <% not_creators = @result.agents.except("creator") %>
+	    <% x= render partial: 'shared/agents_list', locals: {:list => not_creators} %>
+	    <%= render partial: 'shared/accordion_panel', locals: {:p_title =>  t('pui_agent.related'),
+	      :p_id => 'agent_list', :p_body => x} %>
     <% end %>
   	<% unless @result.linked_digital_objects.blank? %>
   		<% x = render partial: 'resources/linked_digital_objects', locals: {:digital_objects => @result.linked_digital_objects} %>
@@ -163,5 +165,5 @@
     <%= render :file => template if File.exists?(template) %>
   <% end %>
 </div>
-<script type="text/javascript" >initialize_accordion(".note_panel", "<%= t('accordion.expand') %>" , "<%= t('accordion.collapse') %>");
+<script type="text/javascript" >initialize_accordion(".note_panel", "<%= t('accordion.expand') %>" , "<%= t('accordion.collapse') %>", <%= AppConfig[:pui_expand_all] %>);
 </script>
