@@ -93,14 +93,14 @@ The fifth configuration option allows you to specify the note type used for the 
 Set
 
 ```
-AppConfig[:aspace_content_warnings_note_type] = 'odd'
+AppConfig[:aspace_content_warnings_note_type] = 'scopecontent'
 ```
 or
 ```
-AppConfig[:aspace_content_warnings_note_type] = 'scopecontent'
+AppConfig[:aspace_content_warnings_note_type] = 'odd'
 ```
 
-Defaults to `odd`.
+Defaults to `scopecontent`.
 
 See the PUI images below for examples of how these would appear in the PUI with the config options
 enabled.
@@ -203,8 +203,6 @@ This plugin overrides several methods related to EAD & EAD3 export. If you have 
 are using plugins that also modify these methods, you will need to reconcile them. Specifically
 
 ```
-    EADSerializer::stream
-    EADSerializer::serialize_child
     EADSerializer::serialize_digital_object
     EAD3Serializer::stream
     EAD3Serializer::serialize_child
