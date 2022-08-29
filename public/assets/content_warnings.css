@@ -1,10 +1,16 @@
 .harmful-content-header {
+  margin-top: -20px;
   margin-bottom: 1rem;
-  padding: 15px;
+  padding: 0.5rem;
   text-align: center;
-  border-left: 1rem solid #ffc107;
-  border-right: 1rem solid #ffc107;
-  background-color: #efefef;
+  color: #fff;
+  background-color: #286090;
+}
+
+.harmful-content-header a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  color: #fff;
 }
 
 .content-warnings {
