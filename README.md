@@ -209,7 +209,7 @@ are using plugins that also modify these methods, you will need to reconcile the
     EAD3Serializer::stream
     EAD3Serializer::serialize_child
     EAD3Serializer::serialize_digital_object
-    MARCModel::intialize
+    MARCModel::initialize
     MARCModel::self.from_aspace_object
 ```     
 
