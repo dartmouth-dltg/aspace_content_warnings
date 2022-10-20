@@ -192,10 +192,12 @@ The plugin adds an additional report that gathers information about the content 
 report includes the warning and any associated primary type (resource, accession, archival object,
 digital object, and digital object component).
 
-## Staff EAD & PDF Exports Note
+## Staff MARC, EAD & PDF Exports Note
 
 EAD, EAD3, and pdf exports include sections with any applied content warnings. Digital Object Components
 are not included in exports.
+
+MARC exports include an additional 520 field. Example: 520 4#$a{Concatenated Content Warnings}
 
 ## Core Overrides
 
@@ -207,7 +209,9 @@ are using plugins that also modify these methods, you will need to reconcile the
     EAD3Serializer::stream
     EAD3Serializer::serialize_child
     EAD3Serializer::serialize_digital_object
-```    
+    MARCModel::intialize
+    MARCModel::self.from_aspace_object
+```     
 
 This plugin also overrides the following views
 ```
