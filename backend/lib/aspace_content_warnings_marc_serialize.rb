@@ -11,7 +11,6 @@ class AspaceContentWarningsMARCSerialize
 
 
   def datafields
-    content_warnings_descs = []
     extra_fields = []
     
     if @record.aspace_record['content_warnings']
@@ -21,12 +20,8 @@ class AspaceContentWarningsMARCSerialize
         else
           cw_description = cw['description']
         end
-        content_warnings_descs << cw_description
+        extra_fields << DataField.new('520', '4', ' ', [SubField.new('a', cw_description)])
       end
-    end
-
-    if content_warnings_descs.length > 0
-      extra_fields << DataField.new('520', '4', ' ', [SubField.new('a', content_warnings_descs.join(" "))])
     end
 
     (@record.datafields + extra_fields).sort_by(&:tag)
