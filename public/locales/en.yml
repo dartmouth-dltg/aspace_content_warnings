@@ -5,7 +5,7 @@ en:
   aspace_content_warnings_general_hc_statement_html: 'Please read our <a href="%{link}">statement on potentially harmful content</a>'
   aspace_content_warnings_submit_btn: Submit
   aspace_content_warnings_submit_btn_text: Help us add a Harmful Content Warning
-  aspace_content_warnings_public_submit: Submit Harmful Content Warning(s)
+  aspace_content_warnings_public_submit: Help us add Harmful Content Warning(s)
   aspace_content_warnings_submit_note: Please tell us if you feel this content may be harmful and why.
 
   pdf_reports:
