@@ -197,7 +197,7 @@ digital object, and digital object component).
 EAD, EAD3, and pdf exports include sections with any applied content warnings. Digital Object Components
 are not included in exports.
 
-MARC exports include an additional 520 field. Example: 520 4#$a{Concatenated Content Warnings}
+MARC exports include an additional 520 field for each applied tag. Example: 520 4#$a{Content Warning}
 
 ## Core Overrides
 
@@ -211,7 +211,7 @@ are using plugins that also modify these methods, you will need to reconcile the
     EAD3Serializer::serialize_digital_object
     MARCModel::initialize
     MARCModel::self.from_aspace_object
-```    
+```     
 
 This plugin also overrides the following views
 ```
