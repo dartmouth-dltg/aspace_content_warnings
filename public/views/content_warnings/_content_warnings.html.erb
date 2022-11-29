@@ -19,7 +19,7 @@
           cw_title = "#{t('enumerations.content_warning_code.' + cw['content_warning_code'], default: cw['content_warning_code'].nil? ? '' : cw['content_warning_code'])}"
           content_warning_tags << cw_title
           if cw['description'].nil?
-            cw_description = t('content_warning_description.' + cw['content_warning_code'], default: cw['content_warning_code'].nil? ? '' : cw['content_warning_code'])
+            cw_description = t('content_warning_description.' + cw['content_warning_code'] + '_html', default: (cw['content_warning_code'] + '_html').nil? ? '' : cw['content_warning_code'])
           else
             cw_description = process_mixed_content(cw['description']).html_safe
           end

@@ -10,7 +10,7 @@
           <%= readonly.label_with_field "content_warning_code", (cw['content_warning_code'] && I18n.t('enumerations.content_warning_code.' + cw['content_warning_code'], cw['content_warning_code'])) %>
           <%
             if cw['description'].blank?
-              desc = I18n.t('content_warning_description.' + cw['content_warning_code'], default: cw['content_warning_code'])
+              desc = I18n.t('content_warning_description.' + cw['content_warning_code'] + '_html', default: cw['content_warning_code'])
             else
               desc = cw['description']
             end

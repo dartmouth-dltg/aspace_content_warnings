@@ -182,7 +182,7 @@ to
 ```
 en:
   content_warning_description:
-    cw_new: >
+    cw_new_html: >
       This is a new example description for a new content warning.    
 ```  
 
