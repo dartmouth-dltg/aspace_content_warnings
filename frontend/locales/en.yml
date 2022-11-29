@@ -38,14 +38,14 @@ en:
 
   content_warning_description:
     # adult
-    cw_adult: >
+    cw_adult_html: >
       This material contains adult themed content.
     # general
-    cw_general: >
-      This material contains harmful content.
+    cw_general_html: >
+      This material contains harmful content <a href="https://foobar.com">link</a>.
     # hateful
-    cw_hate: >
+    cw_hate_html: >
       This material contains hateful content.
     # racism
-    cw_racism: >
+    cw_racism_html: >
       This material contains racist content.
