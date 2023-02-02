@@ -215,9 +215,9 @@ are using plugins that also modify these methods, you will need to reconcile the
 
 This plugin also overrides the following views
 ```
-    /public/views/pdf/_resource.html.erb
     /public/views/pdf/_archival_object.html.erb
-    /public/views/shared/_record_innards.html.erb
+    /public/views/pdf/_digital_object_links.html.erb
+    /public/views/pdf/_resource.html.erb 
 ```
 If you are using other plugins which override the same files, you will need to reconcile
 them.
