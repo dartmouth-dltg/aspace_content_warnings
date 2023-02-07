@@ -3,14 +3,9 @@ require 'aspace_logger'
 class AspaceContentWarningsEAD < EADSerializer
 
   def serialize_aspace_content_warnings(data, xml, fragments)
-    logger=Logger.new($stderr)
-    logger.debug("STEP1")
     if AppConfig[:plugins].include?('aspace_content_warnings')
-      logger.debug("CONTENT WARNINGS INSPECT: #{data.inspect}")
       if data.content_warnings && data.content_warnings.length > 0
-        logger.debug("CONTENT WARNING NOTE TYPE: #{AppConfig[:aspace_content_warnings_note_type]}")
         xml.send(AppConfig[:aspace_content_warnings_note_type]) {
-          logger.debug('STEP2')
           xml.head {
             sanitize_mixed_content(I18n.t("content_warning.section_title"), xml, fragments)
           }
