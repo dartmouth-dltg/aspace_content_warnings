@@ -1,3 +1,4 @@
+<h2><%= t('aspace_content_warnings') %></h2>
 <ul class="aspace-content-warnings-list">
   <% content_warning_tags = [] %>
   <% if AppConfig.has_key?(:aspace_content_warnings) && AppConfig[:aspace_content_warnings]['general_only'] %>

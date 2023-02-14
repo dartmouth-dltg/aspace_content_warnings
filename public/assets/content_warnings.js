@@ -89,11 +89,8 @@ function contentWarningForm(text) {
 
 $().ready(function() {
   $('.content-warnings').not('.inherited-content-warnings').children('span').click(function() {
-    if ($('a[href="#aspace_content_warnings_list"]').attr('aria-expanded') == "false") {
-      $('a[href="#aspace_content_warnings_list"]').click();
-    }
-    panelHeaderHeight = $('#aspace_content_warnings_list').siblings('.panel-heading').outerHeight();
-    offsetTop = $('#aspace_content_warnings_list').offset().top - panelHeaderHeight;
+    const headerHeight = $('.aspace-content-warnings-list').prevAll('h2:first').outerHeight(true);
+    const offsetTop = $('.aspace-content-warnings-list').offset().top - headerHeight;
     window.scrollTo({top: offsetTop, behavior: 'smooth'})
   });
 });

@@ -11,8 +11,7 @@
     end
     %>
     <% unless @result.json['content_warnings'].blank? %>
-    <% x = render partial: 'content_warnings/content_warnings', locals: {:content_warnings =>  @result.json['content_warnings'], :ext_link => content_warnings_ext_link} %>
-    <%= render partial: 'shared/accordion_panel', locals: {:p_title => t('aspace_content_warnings'), :p_id => 'aspace_content_warnings_list', :p_body => x} %>
+    <%= render partial: 'content_warnings/content_warnings', locals: {:content_warnings =>  @result.json['content_warnings'], :ext_link => content_warnings_ext_link} %>
     <% end %>
     <% unless @result.raw['inherited_content_warnings_u_sstr'].blank? %>
     <%
