@@ -1,6 +1,7 @@
 <% Array(instances).each do |instance| %>
     <% next if instance['_inherited'] || (instance.key?('digital_object') && instance['digital_object']['_resolved']['publish'] == false) %>
     <% if instance['instance_type'] == 'digital_object' && instance['digital_object'] %>
+      <% content_warnings = instance['digital_object']['_resolved']['content_warnings'] %>
       <% file_versions = instance['digital_object']['_resolved']['file_versions'] %>
       <%# Check if any file version will be added to the pdf. Only add content warnings if at least one file version #%>
       <% include_content_warnings = false %>
@@ -14,7 +15,6 @@
       <% end %>
     <% end %>
     <!-- Aspace Content Warning Customization Begin -->
-    <% content_warnings = instance['digital_object']['_resolved']['content_warnings'] %>
     <% if AppConfig[:plugins].include?('aspace_content_warnings') && include_content_warnings %>
         <% unless content_warnings.blank? %>
           <dt><%= I18n.t('pdf_reports.do_content_warnings_heading') %></dt>
