@@ -12,7 +12,7 @@
       </li>
   <%
     else
-      Array(record.json['content_warnings']).each do |cw| %>
+      Array(content_warnings).each do |cw| %>
         <li>
          <%
             cw_title = "#{t('enumerations.content_warning_code.' + cw['content_warning_code'], default: cw['content_warning_code'].nil? ? '' : cw['content_warning_code'])}"
