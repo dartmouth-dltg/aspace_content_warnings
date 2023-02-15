@@ -16,7 +16,7 @@ class AspaceContentWarningsMARCSerialize
     if @record.aspace_record['content_warnings']
       @record.aspace_record['content_warnings'].each do |cw|
         if cw['description'].nil?
-          cw_description = I18n.t('content_warning_description.' + cw['content_warning_code'], default: cw['content_warning_code'].nil? ? '' : cw['content_warning_code'])
+          cw_description = I18n.t('content_warning_description.' + cw['content_warning_code'] + '_html', default: cw['content_warning_code'].nil? ? '' : cw['content_warning_code'])
         else
           cw_description = cw['description']
         end
