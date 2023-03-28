@@ -31,4 +31,4 @@ class AspaceContentWarningsMARCSerialize
     @record.send(*args)
   end
   
-  end
+end
