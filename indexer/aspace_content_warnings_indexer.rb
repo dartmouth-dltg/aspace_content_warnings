@@ -4,14 +4,17 @@ class IndexerCommon
   add_indexer_initialize_hook do |indexer|
     if AppConfig[:plugins].include?('aspace_content_warnings')
       indexer.add_document_prepare_hook {|doc, record|
+        doc['content_warnings_u_sstr'] = []
+        doc['content_warnings_code_u_sstr'] = []
+        doc['content_warnings_general_u_sbool'] = false
         if ['accession','resource', 'archival_object', 'digital_object', 'digital_object_component'].include?(doc['primary_type']) && record['record']['content_warnings']
           content_warnings = record['record']['content_warnings']
-          doc['content_warnings_u_sstr'] = []
-          doc['content_warnings_code_u_sstr'] = []
-          doc['content_warnings_general_u_sbool'] = true
-          content_warnings.each do |cw|
-            doc['content_warnings_code_u_sstr'] << cw['content_warnings_code']
-            doc['content_warnings_u_sstr'] << I18n.t('enumerations.content_warning_code.' + cw['content_warning_code'])
+          unless content_warnings.empty?
+            doc['content_warnings_general_u_sbool'] = true
+            content_warnings.each do |cw|
+              doc['content_warnings_code_u_sstr'] << cw['content_warnings_code']
+              doc['content_warnings_u_sstr'] << I18n.t('enumerations.content_warning_code.' + cw['content_warning_code'])
+            end
           end
         end
 
