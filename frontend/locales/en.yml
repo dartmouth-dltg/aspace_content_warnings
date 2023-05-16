@@ -42,7 +42,7 @@ en:
       This material contains adult themed content.
     # general
     cw_general_html: >
-      This material contains harmful content <a href="https://foobar.com">link</a>.
+      This material contains harmful content.
     # hateful
     cw_hate_html: >
       This material contains hateful content.
