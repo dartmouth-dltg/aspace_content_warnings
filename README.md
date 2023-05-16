@@ -3,7 +3,10 @@ ArchivesSpace Content Warnings
 
 ## Note: In Testing & Development Phase
 This plugin is currently in the beta phase, so please test first with non-production
-systems & data.
+systems & data. Please use the branch specific to your version of ArchivesSpace
+- main => ASpace v3.1.0 & v3.1.1
+- as320 => Aspace v3.2.0
+- as330 => Aspace v3.3.0 & v3.3.1
 
 ## Getting started
 
