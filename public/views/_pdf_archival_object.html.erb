@@ -1,0 +1,10 @@
+<!-- Aspace Content Warning Customization Begin -->
+<% if AppConfig[:plugins].include?('aspace_content_warnings') %>
+    <% unless record.json['content_warnings'].blank? %>
+      <dt><%= I18n.t('pdf_reports.content_warnings_heading') %></dt>
+      <dd>
+        <%= render(:partial => 'aspace_content_warnings', :locals => {:content_warnings => record.json['content_warnings']}) %>
+      </dd>
+    <% end %>
+<% end %>
+<!-- Aspace Content Warning Customization End -->

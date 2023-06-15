@@ -1,22 +1,13 @@
 ArchivesSpace Content Warnings
 =============================
 
-## Note: In Testing & Development Phase
-This plugin is currently in the beta phase, so please test first with non-production
-systems & data. Please use the branch specific to your version of ArchivesSpace
-- main => ASpace v3.1.0 & v3.1.1
-- as320 => Aspace v3.2.0
-- as330 => Aspace v3.3.0 & v3.3.1
-
 ## Getting started
 
-This plugin has been tested with ArchivesSpace versions 3.1.1+.
+This plugin has been tested with ArchivesSpace versions 3.1.1+. Please use the release
+suitable for your version of ArchivesSpace.
 
-Unzip the latest release of the plugin to your
-ArchivesSpace plugins directory:
-
-     $ cd /path/to/archivesspace/plugins
-     $ unzip aspace_offensive_content_tags.zip -d aspace_offensive_content_tags
+Unzip the relevant release of the plugin to your
+ArchivesSpace plugins directory.
 
 Enable the plugin by editing your ArchivesSpace configuration file
 (`config/config.rb`):
@@ -208,20 +199,10 @@ This plugin overrides several methods related to EAD & EAD3 export. If you have 
 are using plugins that also modify these methods, you will need to reconcile them. Specifically
 
 ```
-    EADSerializer::serialize_digital_object
-    EAD3Serializer::stream
-    EAD3Serializer::serialize_child
-    EAD3Serializer::serialize_digital_object
     MARCModel::initialize
     MARCModel::self.from_aspace_object
 ```     
 
-This plugin also overrides the following views
-```
-    /public/views/pdf/_archival_object.html.erb
-    /public/views/pdf/_digital_object_links.html.erb
-    /public/views/pdf/_resource.html.erb 
-```
 If you are using other plugins which override the same files, you will need to reconcile
 them.
 
