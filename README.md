@@ -1,18 +1,13 @@
 ArchivesSpace Content Warnings
 =============================
 
-## Note: In Testing & Development Phase
-This plugin is currently in the beta phase, so please test first with non-production
-systems & data. Please use the branch specific to your version of ArchivesSpace
-- main => ASpace v3.1.0 & v3.1.1
-- as320 => Aspace v3.2.0
-- as330 => Aspace v3.3.0 & v3.3.1
+Please use the release specific to your version of ArchivesSpace
 
 ## Getting started
 
 This plugin has been tested with ArchivesSpace versions 3.1.1+.
 
-Unzip the latest release of the plugin to your
+Unzip the correct release of the plugin to your
 ArchivesSpace plugins directory:
 
      $ cd /path/to/archivesspace/plugins
