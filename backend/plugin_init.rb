@@ -2,8 +2,6 @@ require_relative 'lib/aspace_content_warnings_helper'
 require_relative 'lib/aspace_content_warnings_serializer'
 require_relative 'lib/aspace_content_warnings_ead'
 require_relative 'lib/aspace_content_warnings_ead3'
-require_relative 'lib/aspace_content_warnings_ead_overrides'
-require_relative 'lib/aspace_content_warnings_ead3_overrides'
 require_relative 'lib/aspace_patches'
 require_relative 'lib/aspace_content_warnings_marc_serialize'
 
