@@ -2,11 +2,17 @@ class ContentWarningsListReport < AbstractReport
 
   register_report
 
+  def fix_row(row)
+    row[:Content_Warning_Default_Text] = I18n.t('content_warning_description.' + (row[:tag_code]  + '_html'), default: row[:tag_code])
+    row[:create_time] = row[:create_time].strftime('%B %d, %Y')
+  end
+
   def query_string
   "(
     SELECT
         content_warning.content_warning_code_id,
         content_warning.description,
+        content_warning.create_time,
         resource.title AS title,
         'resource' AS type,
         enumeration_value.value AS tag_code
@@ -24,6 +30,7 @@ class ContentWarningsListReport < AbstractReport
       SELECT
           content_warning.content_warning_code_id,
           content_warning.description,
+          content_warning.create_time,
           accession.title AS title,
           'accession' AS type,
           enumeration_value.value AS tag_code
@@ -41,6 +48,7 @@ class ContentWarningsListReport < AbstractReport
       SELECT
           content_warning.content_warning_code_id,
           content_warning.description,
+          content_warning.create_time,
           archival_object.title AS title,
           'archival object' AS type,
           enumeration_value.value AS tag_code
@@ -58,6 +66,7 @@ class ContentWarningsListReport < AbstractReport
       SELECT
           content_warning.content_warning_code_id,
           content_warning.description,
+          content_warning.create_time,
           digital_object.title AS title,
           'digital object' AS type,
           enumeration_value.value AS tag_code
@@ -75,6 +84,7 @@ class ContentWarningsListReport < AbstractReport
       SELECT
           content_warning.content_warning_code_id,
           content_warning.description,
+          content_warning.create_time,
           digital_object_component.title AS title,
           'digital object component' AS type,
           enumeration_value.value AS tag_code

@@ -10,28 +10,28 @@
         content_warnings_ext_link = '<a href="' + AppConfig[:aspace_content_warnings_external_link] + '">' + t('aspace_content_warnings_more_info', default: 'Why we use these tags.') + '</a>'
     end
     %>
-    <% unless @result.json['content_warnings'].blank? %>
-    <%= render partial: 'content_warnings/content_warnings', locals: {:content_warnings =>  @result.json['content_warnings'], :ext_link => content_warnings_ext_link} %>
+    <% if AppConfig[:aspace_content_warnings_display_pui_tags] %>
+        <% unless @result.json['content_warnings'].blank? %>
+        <%= render partial: 'content_warnings/content_warnings', locals: {:content_warnings =>  @result.json['content_warnings'], :ext_link => content_warnings_ext_link} %>
+        <% end %>
+        <% unless @result.raw['inherited_content_warnings_u_sstr'].blank? %>
+        <%
+            if AppConfig.has_key?(:aspace_content_warnings) && AppConfig[:aspace_content_warnings]['general_only'] == true
+            inherited_tags = ASUtils.json_parse(@result.raw['inherited_content_warnings_u_sstr'].first)
+            inherited_tags['tags'] = [t('enumerations.content_warning_code.cw_general')]
+            @result.raw['inherited_content_warnings_u_sstr'] = [ASUtils.to_json(inherited_tags)]
+            end
+        %>
+        <script>
+            setupInheritedContentWarnings(<%=raw @result.raw['inherited_content_warnings_u_sstr'].first %>, '<%=raw content_warnings_ext_link %>');
+        </script>
+        <% end %>
     <% end %>
-    <% unless @result.raw['inherited_content_warnings_u_sstr'].blank? %>
-    <%
-        if AppConfig.has_key?(:aspace_content_warnings) && AppConfig[:aspace_content_warnings]['general_only'] == true
-        inherited_tags = ASUtils.json_parse(@result.raw['inherited_content_warnings_u_sstr'].first)
-        inherited_tags['tags'] = [t('enumerations.content_warning_code.cw_general')]
-        @result.raw['inherited_content_warnings_u_sstr'] = [ASUtils.to_json(inherited_tags)]
-        end
-    %>
-    <script>
-        setupInheritedContentWarnings(<%=raw @result.raw['inherited_content_warnings_u_sstr'].first %>, '<%=raw content_warnings_ext_link %>');
-    </script>
-    <% end %>
-    <% content_warnings_allow_pui_submit = false %>
-    <% unless AppConfig[:aspace_content_warnings_allow_pui_submit].nil? %>
+    <% if AppConfig[:aspace_content_warnings_allow_pui_submit] %>
     <% if defined?(@request) && !@request.nil? %>
         <% public_submit_content_warning = render partial: 'content_warnings/submit_content_warning' %>
         <%= render partial: 'shared/modal', locals: {:modal_id => 'content_warning_submit_modal', :title => t('aspace_content_warnings_public_submit'),
             :modal_body => public_submit_content_warning } %>
-        <% content_warnings_allow_pui_submit = true %>
         <script>
         setupContentWarningSubmit("content_warning_submit_modal",  "<%= t('aspace_content_warnings_submit_btn') %>", "<%= t('aspace_content_warnings_submit_btn_text') %>")
         </script>

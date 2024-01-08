@@ -111,7 +111,7 @@ end
                 <% end %>
 
                 <!-- Aspace Content Warning Customization Begin -->
-                <% if AppConfig[:plugins].include?('aspace_content_warnings') %>
+                <% if AppConfig[:plugins].include?('aspace_content_warnings') && AppConfig[:aspace_content_warnings_display_pui_tags] %>
                     <% unless record.json['content_warnings'].blank? %>
                       <dt><%= I18n.t('pdf_reports.content_warnings_heading') %></dt>
                       <dd>

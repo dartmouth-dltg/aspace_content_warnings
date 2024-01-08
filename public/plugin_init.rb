@@ -23,8 +23,13 @@ Rails.application.config.after_initialize do
   end
 
   # check if the public is allowed to submit suggestions
-  unless AppConfig.has_key?(:aspace_content_warnings_allow_pui_submit)
-    AppConfig[:aspace_content_warnings_allow_pui_submit] = nil
+  unless AppConfig.has_key?(:aspace_content_warnings_allow_pui_submit) && AppConfig.has_key?(:aspace_content_warnings_allow_pui_submit).in?([true, false])
+    AppConfig[:aspace_content_warnings_allow_pui_submit] = false
+  end
+
+  # check if we should display tags in the PUI
+  unless AppConfig.has_key?(:aspace_content_warnings_display_pui_tags) && AppConfig[:aspace_content_warnings_display_pui_tags].in?([true, false])
+    AppConfig[:aspace_content_warnings_display_pui_tags] = true
   end
 
 end

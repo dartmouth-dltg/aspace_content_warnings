@@ -50,7 +50,7 @@ cw_racism: Racist Content
 
 ## Configuration
 
-This plugin accepts five configuration options. One controls the visibility of Content Warnings
+This plugin accepts seven (7) configuration options. One controls the visibility of Content Warnings
 as facets in the staff application and the visibility of Content Warnings
 as facets in the PUI. Set either `staff_faceting` or `public_faceting` to `true` to
 enable Content Warnings facets in that area. Another option `general_only` can be set to true to disable
@@ -104,6 +104,22 @@ AppConfig[:aspace_content_warnings_note_type] = 'odd'
 ```
 
 Defaults to `scopecontent`.
+
+The sixth allows one to turn off the harmful content warning tag and description display in the PUI. Set
+
+```
+AppConfig[:aspace_content_warnings_display_pui_tags] = false
+```
+
+Defaults to `true`.
+
+The seventh controls the inclusion the harmful content warnings in exports. To exclude, set
+
+```
+AppConfig[:aspace_content_warnings_include_tags_in_exports] = false
+```
+
+Defaults to `true`.
 
 See the PUI images below for examples of how these would appear in the PUI with the config options
 enabled.

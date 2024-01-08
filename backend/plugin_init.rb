@@ -16,8 +16,14 @@ else
   AppConfig[:aspace_content_warnings_note_type] = 'scopecontent'
 end
 
-# Register our custom serialize steps.
-EADSerializer.add_serialize_step(EADAspaceContentWarningsSerialize)
-EAD3Serializer.add_serialize_step(EAD3AspaceContentWarningsSerialize)
-MARCSerializer.add_decorator(AspaceContentWarningsMARCSerialize)
+# check if we should include HC in the exports
+unless AppConfig.has_key?(:aspace_content_warnings_include_tags_in_exports) && [true, false].include?(AppConfig[:aspace_content_warnings_include_tags_in_exports]) 
+  AppConfig[:aspace_content_warnings_include_tags_in_exports] = true
+end
 
+# Register our custom serialize steps.
+if AppConfig[:aspace_content_warnings_include_tags_in_exports]
+  EADSerializer.add_serialize_step(EADAspaceContentWarningsSerialize)
+  EAD3Serializer.add_serialize_step(EAD3AspaceContentWarningsSerialize)
+  MARCSerializer.add_decorator(AspaceContentWarningsMARCSerialize)
+end
