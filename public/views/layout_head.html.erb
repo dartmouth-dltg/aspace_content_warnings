@@ -3,7 +3,9 @@
 
 <% if AppConfig[:plugins].include?('aspace_content_warnings') %>
   <% if AppConfig.has_key?(:aspace_content_warnings_pui_statement) && AppConfig[:aspace_content_warnings_pui_statement] %>
-    <% if AppConfig.has_key?(:aspace_content_warnings_external_link) && AppConfig[:aspace_content_warnings_external_link].length > 0 %>
+    <% if AppConfig.has_key?(:aspace_content_warnings_external_link) && 
+    AppConfig[:aspace_content_warnings_external_link].length > 0  &&
+    AppConfig[:aspace_content_warnings_external_link_custom_placement] != true %>
       <script>
         addHeaderLinkToHCStatement('<%= t("aspace_content_warnings_general_hc_statement_html", :link => AppConfig[:aspace_content_warnings_external_link])%>')
       </script>

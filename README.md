@@ -50,7 +50,7 @@ cw_racism: Racist Content
 
 ## Configuration
 
-This plugin accepts seven (7) configuration options. One controls the visibility of Content Warnings
+This plugin accepts eight (8) configuration options. One controls the visibility of Content Warnings
 as facets in the staff application and the visibility of Content Warnings
 as facets in the PUI. Set either `staff_faceting` or `public_faceting` to `true` to
 enable Content Warnings facets in that area. Another option `general_only` can be set to true to disable
@@ -120,6 +120,30 @@ AppConfig[:aspace_content_warnings_include_tags_in_exports] = false
 ```
 
 Defaults to `true`.
+
+The eighth allows for a custom header script to place the harmful content warning link. Set
+```
+AppConfig[:aspace_content_warnings_external_link_custom_placement] = true
+```
+and make sure to include a custom function and call in your pui `layout_head.html.erb` file. You
+would add somethign like the following to that file
+
+```
+<script>
+  dclAddHeaderLinkToHCStatement('<%= t("aspace_content_warnings_general_hc_statement_html", :link => AppConfig[:aspace_content_warnings_external_link])%>')
+</script>
+```
+
+with the attendant function in your pui javascript. Example
+```
+function dclAddHeaderLinkToHCStatement(stmnt) {
+  $().ready(function() {
+    $('{target_selector}').after('<div class="harmful-content-header">' + stmnt + '</div>');
+  });
+}
+```
+
+You will almost certainly need custom CSS to support this customized placement.
 
 See the PUI images below for examples of how these would appear in the PUI with the config options
 enabled.
