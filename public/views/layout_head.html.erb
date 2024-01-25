@@ -1,14 +1,20 @@
 <%= javascript_include_tag "#{AppConfig[:public_proxy_prefix]}assets/content_warnings.js" %>
 <%= stylesheet_link_tag "#{AppConfig[:public_proxy_prefix]}assets/content_warnings.css" %>
+<% default_hc_statement = false %>
 
 <% if AppConfig[:plugins].include?('aspace_content_warnings') %>
   <% if AppConfig.has_key?(:aspace_content_warnings_pui_statement) && AppConfig[:aspace_content_warnings_pui_statement] %>
-    <% if AppConfig.has_key?(:aspace_content_warnings_external_link) && 
-    AppConfig[:aspace_content_warnings_external_link].length > 0  &&
-    AppConfig[:aspace_content_warnings_external_link_custom_placement] != true %>
-      <script>
-        addHeaderLinkToHCStatement('<%= t("aspace_content_warnings_general_hc_statement_html", :link => AppConfig[:aspace_content_warnings_external_link])%>')
-      </script>
+    <% if AppConfig.has_key?(:aspace_content_warnings_external_link) && AppConfig[:aspace_content_warnings_external_link].length > 0 %>
+      <% default_hc_statement = true %>
+      <% if AppConfig.has_key?(:aspace_content_warnings_external_link_custom_placement) && AppConfig[:aspace_content_warnings_external_link_custom_placement] == true %>
+        <% default_hc_statement = false %>
+      <% end %>
     <% end %>
   <% end %>
+<% end %>
+
+<% if default_hc_statement %>
+  <script>
+    addHeaderLinkToHCStatement('<%= t("aspace_content_warnings_general_hc_statement_html", :link => AppConfig[:aspace_content_warnings_external_link])%>')
+  </script>
 <% end %>
