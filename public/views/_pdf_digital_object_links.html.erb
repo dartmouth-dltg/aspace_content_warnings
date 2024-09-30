@@ -1,5 +1,15 @@
 <!-- Aspace Content Warning Customization Begin -->
-<% content_warnings = instance['digital_object']['_resolved']['content_warnings'] %>
+<% 
+  content_warnings = instance.dig('digital_object', '_resolved', 'content_warnings')
+  file_versions = instance.dig('digital_object', '_resolved', 'file_versions')
+  include_content_warnings = false
+
+  Array(file_versions).each do |file|
+    if file['publish'] && file['file_uri'] && file['xlink_show_attribute'] != 'embed'
+      include_content_warnings = true
+    end
+  end
+%>
 <% if AppConfig[:plugins].include?('aspace_content_warnings') && include_content_warnings %>
     <% unless content_warnings.blank? %>
       <dt><%= I18n.t('pdf_reports.do_content_warnings_heading') %></dt>
