@@ -37,29 +37,28 @@ class IndexerCommon
     JSONModel::HTTP.get_json(record['uri'], 'resolve[]' => ['ancestors, ancestors::content_warnings'])
   end
 
-  def self.get_content_warnings_data(record, doc)
+  def self.get_parent_content_warnings(uri, doc)
     tags = []
-    inherit_level = nil
-    inherit_uri = nil
-    if record['ancestors'] && record['ancestors'].length > 0
-      record['ancestors'].each do |anc|
-        anc_data = anc['_resolved']
-        next if anc_data['content_warnings'].nil?
-        break if inherited_lcps.length > 0
-        inherit_uri = anc_data['uri']
-        if anc_data['jsonmodel_type'] == 'digital_object'
-          inherit_level = 'digital object'
-        elsif anc_data['jsonmodel_type'] == 'digital_object_component'
-          inherit_level = 'digital object component'
-        else 
-          inherit_level = anc_data['level']
-        end
-        anc_data['content_warnings'].each do |cw|
-          tags << I18n.t('enumerations.content_warning_code.' + cw['content_warning_code'])
-        end
-      end
-      if tags.length > 0
-        doc['inherited_content_warnings_u_sstr'] << {'tags' => tags, 'level' => inherit_level.capitalize, 'uri' => inherit_uri}.to_json
+    parent = JSONModel::HTTP.get_json(uri)
+    level = parent['level']
+    if parent['jsonmodel_type'] == 'digital_object'
+      level = 'digital object'
+    elsif parent['jsonmodel_type'] == 'digital_object_component'
+      level = 'digital object component'
+    end
+    parent['content_warnings'].each do |cw|
+      tags << I18n.t('enumerations.content_warning_code.' + cw['content_warning_code'])
+    end
+    if tags.length > 0
+      doc['inherited_content_warnings_u_sstr'] << {'tags' => tags, 'level' => level.capitalize, 'uri' => parent['uri']}.to_json
+    end
+    if doc['inherited_content_warnings_u_sstr'].empty?
+      if parent['parent']
+        get_parent_content_warnings(parent['parent']['ref'], doc)
+      elsif parent['resource']
+        get_parent_content_warnings(parent['resource']['ref'], doc)
+      elsif parent['digital_object']
+        get_parent_content_warnings(parent['digital_object']['ref'], doc)
       end
     end
   end
