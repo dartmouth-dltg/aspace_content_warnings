@@ -22,12 +22,14 @@ class IndexerCommon
           doc['inherited_content_warnings_u_sstr'] = []
           # only check if the object is not already tagged
           if doc['content_warnings_u_sstr'].empty?
-            if record['record']['parent']
-              get_parent_content_warnings(record['record']['parent']['ref'], doc)
-            elsif record['record']['resource']
-              get_parent_content_warnings(record['record']['resource']['ref'], doc)
-            elsif record['record']['digital_object']
-              get_parent_content_warnings(record['record']['digital_object']['ref'], doc)
+            record_data = check_ancestors_are_resolved(record)
+
+            record_data['ancestors'].each do |ancestor|
+              if ancestor['_resolved'] && ancestor['_resolved']['content_warnings']
+                anc_cw = get_ancestor_content_warnings(ancestor['_resolved'], doc)
+                doc['inherited_content_warnings_u_sstr'] << anc_cw unless anc_cw.nil?
+                break if doc['inherited_content_warnings_u_sstr'].length > 0
+              end
             end
           end
         end
@@ -35,29 +37,47 @@ class IndexerCommon
     end
   end
 
-  def self.get_parent_content_warnings(uri, doc)
+  # do we really need to be this paranoid?
+  def self.check_ancestors_are_resolved(record)
+    record_data = record['record']
+
+    if record_data['ancestors'].nil?
+      record_data = resolve_ancestors(record)
+    else
+      record_data['ancestors'].each do |anc|
+        if anc['_resolved'].nil?
+          record_data = resolve_ancestors(record)
+          break
+        end
+      end
+    end
+
+    return record_data
+
+  end
+
+  def self.resolve_ancestors(record)
+    JSONModel::HTTP.get_json(record['uri'], 'resolve[]' => ['ancestors', 'ancestors::content_warnings'])
+  end
+
+  def self.get_ancestor_content_warnings(anc, doc)
     tags = []
-    parent = JSONModel::HTTP.get_json(uri)
-    level = parent['level']
-    if parent['jsonmodel_type'] == 'digital_object'
+    level = anc['level']
+
+    if anc['jsonmodel_type'] == 'digital_object'
       level = 'digital object'
-    elsif parent['jsonmodel_type'] == 'digital_object_component'
+    elsif anc['jsonmodel_type'] == 'digital_object_component'
       level = 'digital object component'
     end
-    parent['content_warnings'].each do |cw|
+
+    anc['content_warnings'].each do |cw|
       tags << I18n.t('enumerations.content_warning_code.' + cw['content_warning_code'])
     end
+
     if tags.length > 0
-      doc['inherited_content_warnings_u_sstr'] << {'tags' => tags, 'level' => level.capitalize, 'uri' => parent['uri']}.to_json
-    end
-    if doc['inherited_content_warnings_u_sstr'].empty?
-      if parent['parent']
-        get_parent_content_warnings(parent['parent']['ref'], doc)
-      elsif parent['resource']
-        get_parent_content_warnings(parent['resource']['ref'], doc)
-      elsif parent['digital_object']
-        get_parent_content_warnings(parent['digital_object']['ref'], doc)
-      end
+      {'tags' => tags, 'level' => level.capitalize, 'uri' => parent['uri']}.to_json
+    else
+      nil
     end
   end
 
