@@ -213,3 +213,6 @@ so no core exporter methods are replaced.
 
 Plugin developed by Joshua Shaw [Joshua.D.Shaw@dartmouth.edu], Digital Library Technologies Group
 Dartmouth Library, Dartmouth College
+
+Partially authored with assistance from Claude (Anthropic), including the ArchivesSpace 4.2.1
+compatibility review and related fixes.
