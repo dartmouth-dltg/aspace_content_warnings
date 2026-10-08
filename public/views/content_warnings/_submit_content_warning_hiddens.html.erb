@@ -1,19 +1,19 @@
 <%# yield all the "hidden" fields for a content warning submit form, very similar to request_hiddens %>
 <% unless @back_url.blank? %>
-  <input type='hidden' name='back_url' value='<%= @back_url %>' />
+  <%= hidden_field_tag 'back_url', @back_url, id: nil %>
 <% end %>
 <% @request.each_pair do |attr, value| %>
   <% next if value.nil? %>
-    <% if value.kind_of? Array %>
-      <% value.each do |v| %>
-      <input type='hidden' name='<%= "#{attr.to_s}[]" %>' value='<%= sanitize v %>' />
+  <% if value.kind_of? Array %>
+    <% value.each do |v| %>
+      <%= hidden_field_tag "#{attr}[]", sanitize(v), id: nil %>
     <% end %>
   <% else %>
     <%
       if attr.to_s == 'title'
-        value +=  t('aspace_content_warnings_email_to', default: ' - Content Warnings Submission')
+        value += t('aspace_content_warnings_email_to', default: ' - Content Warnings Submission')
       end
     %>
-    <input type='hidden' name='<%= attr.to_s %>' value='<%= sanitize value %>' />
+    <%= hidden_field_tag attr.to_s, sanitize(value), id: nil %>
   <% end %>
 <% end %>

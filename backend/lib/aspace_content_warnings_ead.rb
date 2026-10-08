@@ -1,5 +1,3 @@
-require 'aspace_logger'
-
 class AspaceContentWarningsEAD < EADSerializer
 
   def serialize_aspace_content_warnings(data, xml, fragments)
@@ -9,7 +7,7 @@ class AspaceContentWarningsEAD < EADSerializer
           xml.head {
             sanitize_mixed_content(I18n.t("content_warning.section_title"), xml, fragments)
           }
-          if AppConfig.has_key?(:aspace_content_warnings) && AppConfig[:aspace_content_warnings]['general_only'] == true
+          if AspaceContentWarningsEADHelper.general_only?
             cw_text = AspaceContentWarningsEADHelper.general_cw_text
             xml.p {
               sanitize_mixed_content(cw_text, xml, fragments)
@@ -33,7 +31,7 @@ class AspaceContentWarningsEAD < EADSerializer
           xml.p {
             sanitize_mixed_content(I18n.t("content_warning.section_title"), xml, fragments)
           }
-          if AppConfig.has_key?(:aspace_content_warnings) && AppConfig[:aspace_content_warnings]['general_only'] == true
+          if AspaceContentWarningsEADHelper.general_only?
             xml.p {
               sanitize_mixed_content(AspaceContentWarningsEADHelper.general_cw_text, xml, fragments)
             } 
