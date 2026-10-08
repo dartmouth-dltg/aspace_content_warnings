@@ -3,8 +3,11 @@ ArchivesSpace Content Warnings
 
 ## Getting started
 
-This plugin has been tested with ArchivesSpace versions 3.1.1+. Please use the release
-suitable for your version of ArchivesSpace.
+This plugin has been tested with ArchivesSpace versions 3.1.1+. The `as-4.2.1` branch has been
+reviewed against the 4.2.1 source (exporter, indexer, PUI and staff UI hooks) but has not yet been
+tested in a running 4.2.1 instance. Please use the release suitable for your version of ArchivesSpace.
+
+The PUI JavaScript uses ES2022 features (class private members), so a current browser is required.
 
 Unzip the relevant release of the plugin to your
 ArchivesSpace plugins directory.
@@ -195,16 +198,16 @@ MARC exports include an additional 520 field for each applied tag. Example: 520 
 
 ## Core Overrides
 
-This plugin overrides several methods related to EAD & EAD3 export. If you have modified these or
-are using plugins that also modify these methods, you will need to reconcile them. Specifically
+This plugin patches a few core methods. If you have modified these or are using plugins that also
+modify them, you will need to reconcile the changes.
 
 ```
-    MARCModel::initialize
-    MARCModel::self.from_aspace_object
-```     
+    MARCModel.from_aspace_object     (wrapped via alias_method; keeps a reference to the source record)
+    Searchable#set_up_advanced_search (PUI; only when `public_faceting` is enabled)
+```
 
-If you are using other plugins which override the same files, you will need to reconcile
-them.
+EAD, EAD3 and MARC output is added through the core `add_serialize_step` / `add_decorator` hooks,
+so no core exporter methods are replaced.
 
 ## Credits
 
