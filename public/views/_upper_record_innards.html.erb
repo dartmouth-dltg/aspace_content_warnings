@@ -22,7 +22,7 @@
         end
     %>
     <script>
-        setupInheritedContentWarnings(<%=raw @result.raw['inherited_content_warnings_u_sstr'].first %>, '<%=raw content_warnings_ext_link %>');
+        setupInheritedContentWarnings(<%=raw @result.raw['inherited_content_warnings_u_sstr'].first.gsub('</', '<\\/') %>, <%=raw content_warnings_ext_link.to_json.gsub('</', '<\\/') %>);
     </script>
     <% end %>
     <% content_warnings_allow_pui_submit = false %>
@@ -33,7 +33,7 @@
             :modal_body => public_submit_content_warning } %>
         <% content_warnings_allow_pui_submit = true %>
         <script>
-        setupContentWarningSubmit("content_warning_submit_modal",  "<%= t('aspace_content_warnings_submit_btn') %>", "<%= t('aspace_content_warnings_submit_btn_text') %>")
+        setupContentWarningSubmit("content_warning_submit_modal", <%=raw t('aspace_content_warnings_submit_btn').to_json %>, <%=raw t('aspace_content_warnings_submit_btn_text').to_json %>);
         </script>
     <% end %>
     <% end %>

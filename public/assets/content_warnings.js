@@ -1,97 +1,135 @@
 // content warnings
-function setupContentWarnings(content_warnings, ext_link) {
-  if (content_warnings.length > 0) {
-    var content_warnings_wrapper = $('<div class="content-warnings"></div>');
-    applyContentWarnings(content_warnings, content_warnings_wrapper, ext_link);
-  }
-}
 
-function setupInheritedContentWarnings(obj, ext_link) {
-  var inherited_prefix = $('<div class="inherited-content-warning-prefix">Applied at the <a></a> level</div>');
-  inherited_prefix.find('a').attr('href', obj.uri).text(obj.level);
-  var inherited_tags_wrapper = $('<div class="content-warnings inherited-content-warnings"></div>');
-  applyContentWarnings(obj.tags, inherited_tags_wrapper, ext_link, inherited_prefix);
-}
+const createEl = (tag, className, text) => {
+  const el = document.createElement(tag);
+  if (className) el.className = className;
+  if (text !== undefined) el.textContent = text;
+  return el;
+};
 
-function applyContentWarnings(content_warnings, tag_wrapper, ext_link, prefix = null) {
-  $.each(content_warnings, function(idx, val) {
-    tag_wrapper.append($('<span class="cw-tag"><span class="cw-text"></span></span>').find('.cw-text').text(val).end());
-  });
-  $('#main-content h1').after(tag_wrapper);
-  if (prefix != null) {
-    $('#main-content h1').after(prefix);
-  }
-  if (ext_link != '') {
-    tag_wrapper.after('<div class="content-warning-external-link">' + ext_link + '</div>');
-  }
-}
+class ContentWarningTags {
+  #title = document.querySelector('#main-content h1');
 
-function addHeaderLinkToHCStatement(stmnt) {
-  $().ready(function() {
-    $('#navigation').append('<div class="harmful-content-header">' + stmnt + '</div>');
-  });
-}
-
-function setupContentWarningSubmit(modalId, text, btnText) {
-  $(".noscript").hide();
-  var target = $('#main-content h1');
-  if ($('.content-warnings').length > 0 ) {
-    target = $('.content-warnings');
-  }
-  else if ($('.content-warning-external-link').length > 0) {
-    target = $('.content-warning-external-link');
+  constructor(tags, extLink = '') {
+    this.tags = tags;
+    this.extLink = extLink;
   }
 
-  target.after('<button id="content-warning-sub" class="btn btn-primary content-warning-submit"><i class="fa fa-paper-plane"></i>&nbsp;' + btnText + '</button>');
-  $('#main-content').on('click', '#content-warning-sub', function(e) {
-    e.preventDefault();
-    contentWarningForm(text);
-  });
-}
+  render({ inherited = false, prefix = null } = {}) {
+    const wrapper = createEl('div', inherited ? 'content-warnings inherited-content-warnings' : 'content-warnings');
+    this.tags.forEach((tag) => {
+      const item = createEl('span', 'cw-tag');
+      item.append(createEl('span', 'cw-text', tag));
+      wrapper.append(item);
+    });
 
-function contentWarningForm(text) {
-  var $modal = $("#content_warning_submit_modal");
-  $modal.modal('show');
-  var x = $modal.find('.action-btn');
-  var btn;
-  if (x.length == 1) {
-    btn = x[0];
-  } else {
-    btn = x;
-  }
-  $(btn).attr('id', "submit_content_warning_btn");
-  $(btn).html(text);
-  $('body').off('click', '#submit_content_warning_btn').on('click', '#submit_content_warning_btn', function(e) {
-    $("#submit_content_warning_form").submit();
-  });
-
-  $('#user_name',this).closest('.form-group').removeClass('has-error');
-  $('#user_email',this).closest('.form-group').removeClass('has-error');
-
-  $('#submit_content_warning_form', '#content_warning_submit_modal').off('submit').on('submit', function() {
-    var proceed = true;
-
-    if ($('#user_name',this).val().trim() == '') {
-      $('#user_name',this).closest('.form-group').addClass('has-error');
-      proceed = false;
-    } else {
-      $('#user_name',this).closest('.form-group').removeClass('has-error');
+    this.#title?.after(wrapper);
+    if (prefix) this.#title?.after(prefix);
+    if (this.extLink) {
+      // extLink is trusted markup built server-side (see _upper_record_innards)
+      const link = createEl('div', 'content-warning-external-link');
+      link.innerHTML = this.extLink;
+      wrapper.after(link);
     }
-    if ($('#user_email',this).val().trim() == '') {
-      $('#user_email',this).closest('.form-group').addClass('has-error');
-      proceed = false;
-    } else {
-      $('#user_email',this).closest('.form-group').removeClass('has-error');
-    }
+    return wrapper;
+  }
 
-    return proceed;
-  });
+  static inheritedPrefix({ uri, level }) {
+    const prefix = createEl('div', 'inherited-content-warning-prefix');
+    const anchor = createEl('a', null, level);
+    anchor.href = uri;
+    prefix.append('Applied at the ', anchor, ' level');
+    return prefix;
+  }
 }
 
-$().ready(function() {
-  $('.content-warnings').not('.inherited-content-warnings').children('span').click(function() {
-    const headerHeight = $('.aspace-content-warnings-list').prevAll('h2:first').outerHeight(true);
-    const offsetTop = $('.aspace-content-warnings-list').offset().top - headerHeight;
-    window.scrollTo({top: offsetTop, behavior: 'smooth'})
+class ContentWarningSubmit {
+  static REQUIRED_FIELDS = ['#user_name', '#user_email'];
+
+  constructor(modalId, submitText, buttonText) {
+    this.$modal = $(`#${modalId}`);
+    this.submitText = submitText;
+    this.buttonText = buttonText;
+  }
+
+  init() {
+    $('.noscript').hide();
+    this.#addTriggerButton();
+    this.#bindModal();
+  }
+
+  #addTriggerButton() {
+    const target = document.querySelector('.content-warnings')
+      ?? document.querySelector('.content-warning-external-link')
+      ?? document.querySelector('#main-content h1');
+
+    const button = createEl('button', 'btn btn-primary content-warning-submit');
+    button.id = 'content-warning-sub';
+    button.innerHTML = '<i class="fa fa-paper-plane"></i>&nbsp;';
+    button.append(this.buttonText);
+    target?.after(button);
+
+    $('#main-content').on('click', '#content-warning-sub', (e) => {
+      e.preventDefault();
+      this.#open();
+    });
+  }
+
+  // bind once so reopening the modal doesn't stack handlers
+  #bindModal() {
+    $('body').on('click', '#submit_content_warning_btn', () => {
+      $('#submit_content_warning_form').submit();
+    });
+
+    this.$modal.find('#submit_content_warning_form').on('submit', (e) => {
+      const form = $(e.currentTarget);
+      let proceed = true;
+      ContentWarningSubmit.REQUIRED_FIELDS.forEach((selector) => {
+        const field = form.find(selector);
+        const missing = field.val().trim() === '';
+        field.closest('.form-group').toggleClass('has-error', missing);
+        if (missing) proceed = false;
+      });
+      return proceed;
+    });
+  }
+
+  #open() {
+    this.$modal.modal('show');
+    this.$modal.find('.action-btn').attr('id', 'submit_content_warning_btn').html(this.submitText);
+    this.$modal.find('.form-group').removeClass('has-error');
+  }
+}
+
+// entry points called from inline <script> tags in the PUI views
+const setupContentWarnings = (tags, extLink) => {
+  if (tags.length > 0) new ContentWarningTags(tags, extLink).render();
+};
+
+const setupInheritedContentWarnings = (obj, extLink) => {
+  new ContentWarningTags(obj.tags, extLink).render({
+    inherited: true,
+    prefix: ContentWarningTags.inheritedPrefix(obj),
+  });
+};
+
+const addHeaderLinkToHCStatement = (statement) => {
+  $(() => {
+    const el = createEl('div', 'harmful-content-header');
+    el.innerHTML = statement;
+    $('#navigation').append(el);
+  });
+};
+
+const setupContentWarningSubmit = (modalId, submitText, buttonText) => {
+  new ContentWarningSubmit(modalId, submitText, buttonText).init();
+};
+
+// clicking a tag scrolls to the full list
+$(() => {
+  $('.content-warnings').not('.inherited-content-warnings').children('span').on('click', () => {
+    const list = $('.aspace-content-warnings-list');
+    const headerHeight = list.prevAll('h2:first').outerHeight(true);
+    window.scrollTo({ top: list.offset().top - headerHeight, behavior: 'smooth' });
   });
 });
