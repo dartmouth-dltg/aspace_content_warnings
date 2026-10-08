@@ -1,4 +1,3 @@
-require 'aspace_logger'
 class IndexerCommon
 
   add_indexer_initialize_hook do |indexer|
@@ -12,8 +11,8 @@ class IndexerCommon
           unless content_warnings.empty?
             doc['content_warnings_general_u_sbool'] = true
             content_warnings.each do |cw|
-              doc['content_warnings_code_u_sstr'] << cw['content_warnings_code']
-              doc['content_warnings_u_sstr'] << I18n.t('enumerations.content_warning_code.' + cw['content_warning_code'])
+              doc['content_warnings_code_u_sstr'] << cw['content_warning_code']
+              doc['content_warnings_u_sstr'] << I18n.t("enumerations.content_warning_code.#{cw['content_warning_code']}", default: cw['content_warning_code'])
             end
           end
         end
@@ -24,7 +23,7 @@ class IndexerCommon
           if doc['content_warnings_u_sstr'].empty?
             record_data = check_ancestors_are_resolved(record)
 
-            record_data['ancestors'].each do |ancestor|
+            Array(record_data && record_data['ancestors']).each do |ancestor|
               if ancestor['_resolved'] && ancestor['_resolved']['content_warnings']
                 anc_cw = get_ancestor_content_warnings(ancestor['_resolved'], doc)
                 doc['inherited_content_warnings_u_sstr'] << anc_cw unless anc_cw.nil?
@@ -57,12 +56,12 @@ class IndexerCommon
   end
 
   def self.resolve_ancestors(record)
-    JSONModel::HTTP.get_json(record['uri'], 'resolve[]' => ['ancestors', 'ancestors::content_warnings'])
+    JSONModel::HTTP.get_json(record['uri'], 'resolve[]' => ['ancestors'])
   end
 
   def self.get_ancestor_content_warnings(anc, doc)
     tags = []
-    level = anc['level']
+    level = anc['level'].to_s
 
     if anc['jsonmodel_type'] == 'digital_object'
       level = 'digital object'
@@ -71,11 +70,11 @@ class IndexerCommon
     end
 
     anc['content_warnings'].each do |cw|
-      tags << I18n.t('enumerations.content_warning_code.' + cw['content_warning_code'])
+      tags << I18n.t("enumerations.content_warning_code.#{cw['content_warning_code']}", default: cw['content_warning_code'])
     end
 
     if tags.length > 0
-      {'tags' => tags, 'level' => level.capitalize, 'uri' => parent['uri']}.to_json
+      {'tags' => tags, 'level' => level.capitalize, 'uri' => anc['uri']}.to_json
     else
       nil
     end

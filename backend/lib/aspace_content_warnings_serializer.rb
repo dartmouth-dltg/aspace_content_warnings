@@ -1,5 +1,3 @@
-require 'aspace_logger'
-
 class EADAspaceContentWarningsSerialize < EADSerializer
 
   def call(data, xml, fragments, context)

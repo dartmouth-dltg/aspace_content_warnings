@@ -1,14 +1,17 @@
+# keep a handle on the source record so the MARC decorator can read content_warnings
 class MARCModel < ASpaceExport::ExportModel
   attr_reader :aspace_record
 
-  def initialize(obj, include_unpublished = false)
-    @datafields = {}
-    @include_unpublished = include_unpublished
-    @aspace_record = obj
-  end
+  class << self
+    # guard: backend plugin files are in main.rb's also_reload list, so this file can load twice
+    unless method_defined?(:aspace_content_warnings_from_aspace_object)
+      alias_method :aspace_content_warnings_from_aspace_object, :from_aspace_object
 
-  def self.from_aspace_object(obj, opts={})
-    self.new(obj, opts[:include_unpublished])
+      def from_aspace_object(obj, opts = {})
+        marc = aspace_content_warnings_from_aspace_object(obj, opts)
+        marc.instance_variable_set(:@aspace_record, obj)
+        marc
+      end
+    end
   end
-
 end

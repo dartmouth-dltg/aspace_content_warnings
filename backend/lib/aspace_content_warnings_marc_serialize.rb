@@ -1,5 +1,3 @@
-require 'aspace_logger'
-
 class AspaceContentWarningsMARCSerialize
 
   DataField = Struct.new(:tag, :ind1, :ind2, :subfields)
@@ -11,24 +9,22 @@ class AspaceContentWarningsMARCSerialize
 
 
   def datafields
-    extra_fields = []
-    
-    if @record.aspace_record['content_warnings']
-      @record.aspace_record['content_warnings'].each do |cw|
-        if cw['description'].nil?
-          cw_description = I18n.t('content_warning_description.' + cw['content_warning_code'] + '_html', default: cw['content_warning_code'].nil? ? '' : cw['content_warning_code'])
-        else
-          cw_description = cw['description']
-        end
-        extra_fields << DataField.new('520', '4', ' ', [SubField.new('a', cw_description)])
-      end
+    extra_fields = Array(@record.aspace_record && @record.aspace_record['content_warnings']).map do |cw|
+      code = cw['content_warning_code'].to_s
+      description = cw['description'].to_s.strip
+      description = I18n.t("content_warning_description.#{code}_html", default: code) if description.empty?
+      DataField.new('520', '4', ' ', [SubField.new('a', description)])
     end
 
     (@record.datafields + extra_fields).sort_by(&:tag)
   end
 
-  def method_missing(*args)
-    @record.send(*args)
+  def respond_to_missing?(name, include_private = false)
+    @record.respond_to?(name, include_private) || super
   end
-  
+
+  def method_missing(name, *args, &block)
+    @record.send(name, *args, &block)
+  end
+
 end

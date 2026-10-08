@@ -7,14 +7,15 @@ function setupContentWarnings(content_warnings, ext_link) {
 }
 
 function setupInheritedContentWarnings(obj, ext_link) {
-  var inherited_prefix = '<div class="inherited-content-warning-prefix">Applied at the <a href="' + obj.uri + '">' + obj.level + '</a> level</div>';
+  var inherited_prefix = $('<div class="inherited-content-warning-prefix">Applied at the <a></a> level</div>');
+  inherited_prefix.find('a').attr('href', obj.uri).text(obj.level);
   var inherited_tags_wrapper = $('<div class="content-warnings inherited-content-warnings"></div>');
   applyContentWarnings(obj.tags, inherited_tags_wrapper, ext_link, inherited_prefix);
 }
 
 function applyContentWarnings(content_warnings, tag_wrapper, ext_link, prefix = null) {
   $.each(content_warnings, function(idx, val) {
-    tag_wrapper.append('<span class="cw-tag"><span class="cw-text">' + val + '</span></span>');
+    tag_wrapper.append($('<span class="cw-tag"><span class="cw-text"></span></span>').find('.cw-text').text(val).end());
   });
   $('#main-content h1').after(tag_wrapper);
   if (prefix != null) {
@@ -60,14 +61,14 @@ function contentWarningForm(text) {
   }
   $(btn).attr('id', "submit_content_warning_btn");
   $(btn).html(text);
-  $('body').on('click', '#submit_content_warning_btn', function(e) {
+  $('body').off('click', '#submit_content_warning_btn').on('click', '#submit_content_warning_btn', function(e) {
     $("#submit_content_warning_form").submit();
   });
 
   $('#user_name',this).closest('.form-group').removeClass('has-error');
   $('#user_email',this).closest('.form-group').removeClass('has-error');
 
-  $('#submit_content_warning_form', '#content_warning_submit_modal').on('submit', function() {
+  $('#submit_content_warning_form', '#content_warning_submit_modal').off('submit').on('submit', function() {
     var proceed = true;
 
     if ($('#user_name',this).val().trim() == '') {
