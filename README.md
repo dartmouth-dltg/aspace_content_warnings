@@ -47,7 +47,7 @@ cw_racism: Racist Content
 This plugin accepts five configuration options. One controls the visibility of Content Warnings
 as facets in the staff application and the visibility of Content Warnings
 as facets in the PUI. Set either `staff_faceting` or `public_faceting` to `true` to
-enable Content Warnings facets in that area. 
+enable Content Warnings facets in that area.
 
 Another option `general_only` can be set to `true` to disable the display of specific warning
 tags in the PUI and any exports (EAD, etc). If set, only the general content warning and its default
@@ -57,7 +57,7 @@ description will display. Typically you will want to leave this set to `false`.
 AppConfig[:aspace_content_warnings] = {
   'staff_faceting' => true,
   'public_faceting' => true,
-  'general_only' => true
+  'general_only' => false
 }
 ```
 

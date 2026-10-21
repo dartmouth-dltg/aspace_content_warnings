@@ -96,7 +96,7 @@ class ContentWarningSubmit {
 
   #open() {
     this.$modal.modal('show');
-    this.$modal.find('.action-btn').attr('id', 'submit_content_warning_btn').html(this.submitText);
+    this.$modal.find('.modal-footer .action-btn').attr('id', 'submit_content_warning_btn').html(this.submitText);
     this.$modal.find('.form-group').removeClass('has-error');
   }
 }

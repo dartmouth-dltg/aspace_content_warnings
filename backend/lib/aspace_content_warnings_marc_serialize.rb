@@ -9,10 +9,14 @@ class AspaceContentWarningsMARCSerialize
 
 
   def datafields
-    extra_fields = Array(@record.aspace_record && @record.aspace_record['content_warnings']).map do |cw|
+    content_warnings = Array(@record.aspace_record && @record.aspace_record['content_warnings'])
+    # general_only collapses everything to a single general warning, matching EAD/PUI
+    content_warnings = [{'content_warning_code' => 'cw_general'}] if content_warnings.any? && AspaceContentWarningsEADHelper.general_only?
+
+    extra_fields = content_warnings.map do |cw|
       code = cw['content_warning_code'].to_s
       description = cw['description'].to_s.strip
-      description = I18n.t("content_warning_description.#{code}_html", default: code) if description.empty?
+      description = I18n.t("content_warning_description.#{code}_html", default: code).strip if description.empty?
       DataField.new('520', '4', ' ', [SubField.new('a', description)])
     end
 
