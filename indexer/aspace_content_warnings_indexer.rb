@@ -1,83 +1,64 @@
 class IndexerCommon
 
+  CONTENT_WARNING_TYPES = ['accession', 'resource', 'archival_object', 'digital_object', 'digital_object_component'].freeze
+  CONTENT_WARNING_CHILD_TYPES = ['archival_object', 'digital_object_component'].freeze
+
+  # resolve ancestors in the batch fetch so we don't need a GET per record
+  add_attribute_to_resolve('ancestors')
+
   add_indexer_initialize_hook do |indexer|
     if AppConfig[:plugins].include?('aspace_content_warnings')
       indexer.add_document_prepare_hook {|doc, record|
         doc['content_warnings_u_sstr'] = []
         doc['content_warnings_code_u_sstr'] = []
         doc['content_warnings_general_u_sbool'] = false
-        if ['accession','resource', 'archival_object', 'digital_object', 'digital_object_component'].include?(doc['primary_type']) && record['record']['content_warnings']
-          content_warnings = record['record']['content_warnings']
-          unless content_warnings.empty?
-            doc['content_warnings_general_u_sbool'] = true
-            content_warnings.each do |cw|
-              doc['content_warnings_code_u_sstr'] << cw['content_warning_code']
-              doc['content_warnings_u_sstr'] << I18n.t("enumerations.content_warning_code.#{cw['content_warning_code']}", default: cw['content_warning_code'])
-            end
+        next unless CONTENT_WARNING_TYPES.include?(doc['primary_type'])
+
+        content_warnings = Array(record['record']['content_warnings'])
+        unless content_warnings.empty?
+          doc['content_warnings_general_u_sbool'] = true
+          content_warnings.each do |cw|
+            doc['content_warnings_code_u_sstr'] << cw['content_warning_code']
+            doc['content_warnings_u_sstr'] << content_warning_label(cw['content_warning_code'])
           end
         end
 
-        if ['archival_object', 'digital_object_component'].include?(doc['primary_type'])
-          doc['inherited_content_warnings_u_sstr'] = []
-          # only check if the object is not already tagged
-          if doc['content_warnings_u_sstr'].empty?
-            record_data = check_ancestors_are_resolved(record)
+        next unless CONTENT_WARNING_CHILD_TYPES.include?(doc['primary_type'])
 
-            Array(record_data && record_data['ancestors']).each do |ancestor|
-              if ancestor['_resolved'] && ancestor['_resolved']['content_warnings']
-                anc_cw = get_ancestor_content_warnings(ancestor['_resolved'], doc)
-                doc['inherited_content_warnings_u_sstr'] << anc_cw unless anc_cw.nil?
-                break if doc['inherited_content_warnings_u_sstr'].length > 0
-              end
-            end
-          end
-        end
+        doc['inherited_content_warnings_u_sstr'] = []
+        # only check if the object is not already tagged
+        next unless content_warnings.empty?
+
+        ancestors = content_warnings_resolved_ancestors(record)
+        ancestor = ancestors.find {|anc| anc['_resolved'] && !Array(anc['_resolved']['content_warnings']).empty?}
+        doc['inherited_content_warnings_u_sstr'] << ancestor_content_warnings(ancestor['_resolved']) if ancestor
       }
     end
   end
 
-  # do we really need to be this paranoid?
-  def self.check_ancestors_are_resolved(record)
-    record_data = record['record']
-
-    if record_data['ancestors'].nil?
-      record_data = resolve_ancestors(record)
-    else
-      record_data['ancestors'].each do |anc|
-        if anc['_resolved'].nil?
-          record_data = resolve_ancestors(record)
-          break
-        end
-      end
-    end
-
-    return record_data
-
+  def self.content_warning_label(code)
+    I18n.t("enumerations.content_warning_code.#{code}", default: code)
   end
 
-  def self.resolve_ancestors(record)
-    JSONModel::HTTP.get_json(record['uri'], 'resolve[]' => ['ancestors'])
+  # fall back to fetching the record if ancestors somehow arrived unresolved
+  def self.content_warnings_resolved_ancestors(record)
+    ancestors = record['record']['ancestors']
+    if ancestors.nil? || ancestors.any? {|anc| anc['_resolved'].nil?}
+      record_data = JSONModel::HTTP.get_json(record['uri'], 'resolve[]' => ['ancestors'])
+      ancestors = record_data && record_data['ancestors']
+    end
+    Array(ancestors)
   end
 
-  def self.get_ancestor_content_warnings(anc, doc)
-    tags = []
-    level = anc['level'].to_s
+  def self.ancestor_content_warnings(anc)
+    level = case anc['jsonmodel_type']
+            when 'digital_object' then 'digital object'
+            when 'digital_object_component' then 'digital object component'
+            else anc['level'].to_s
+            end
 
-    if anc['jsonmodel_type'] == 'digital_object'
-      level = 'digital object'
-    elsif anc['jsonmodel_type'] == 'digital_object_component'
-      level = 'digital object component'
-    end
-
-    anc['content_warnings'].each do |cw|
-      tags << I18n.t("enumerations.content_warning_code.#{cw['content_warning_code']}", default: cw['content_warning_code'])
-    end
-
-    if tags.length > 0
-      {'tags' => tags, 'level' => level.capitalize, 'uri' => anc['uri']}.to_json
-    else
-      nil
-    end
+    tags = anc['content_warnings'].map {|cw| content_warning_label(cw['content_warning_code'])}
+    {'tags' => tags, 'level' => level.capitalize, 'uri' => anc['uri']}.to_json
   end
 
 end
