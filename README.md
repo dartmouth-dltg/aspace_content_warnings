@@ -212,6 +212,14 @@ modify them, you will need to reconcile the changes.
 EAD, EAD3 and MARC output is added through the core `add_serialize_step` / `add_decorator` hooks,
 so no core exporter methods are replaced.
 
+The indexer resolves `ancestors` in the batch fetch so inherited warnings don't cost a backend
+request per record. On releases without `IndexerCommon#final_doc_rules` (added in
+[archivesspace #3667](https://github.com/archivesspace/archivesspace/commit/597dcfc017c64fece865b33051b85d9678502958)),
+the PUI indexer deletes ancestors before plugin hooks run, so the plugin puts its document prepare
+hook at the front of the indexer's internal `@document_prepare_hooks` list. Where `final_doc_rules`
+exists it registers the hook normally. If another plugin also needs to run first, check how the
+two hooks interact.
+
 ## Credits
 
 Plugin developed by Joshua Shaw [Joshua.D.Shaw@dartmouth.edu], Digital Library Technologies Group
