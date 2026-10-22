@@ -8,7 +8,9 @@ class IndexerCommon
 
   add_indexer_initialize_hook do |indexer|
     if AppConfig[:plugins].include?('aspace_content_warnings')
-      indexer.add_document_prepare_hook {|doc, record|
+      # PUIIndexer's own prepare hook deletes record['record']['ancestors'] and plugin
+      # hooks normally run after it, so go first or every AO costs a backend GET
+      indexer.instance_variable_get(:@document_prepare_hooks).unshift(proc {|doc, record|
         doc['content_warnings_u_sstr'] = []
         doc['content_warnings_code_u_sstr'] = []
         doc['content_warnings_general_u_sbool'] = false
@@ -32,7 +34,7 @@ class IndexerCommon
         ancestors = content_warnings_resolved_ancestors(record)
         ancestor = ancestors.find {|anc| anc['_resolved'] && !Array(anc['_resolved']['content_warnings']).empty?}
         doc['inherited_content_warnings_u_sstr'] << ancestor_content_warnings(ancestor['_resolved']) if ancestor
-      }
+      })
     end
   end
 
