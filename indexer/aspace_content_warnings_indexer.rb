@@ -3,11 +3,20 @@ class IndexerCommon
   CONTENT_WARNING_TYPES = ['accession', 'resource', 'archival_object', 'digital_object', 'digital_object_component'].freeze
   CONTENT_WARNING_CHILD_TYPES = ['archival_object', 'digital_object_component'].freeze
 
-  # resolve ancestors in the batch fetch so we don't need a GET per record
-  add_attribute_to_resolve('ancestors')
+  # Only the PUI shows inherited warnings, so only the PUI indexer needs resolved
+  # ancestors. add_attribute_to_resolve applies to every indexer, which made the
+  # staff indexer fetch the full JSON of every ancestor of every archival object.
+  # The PUI indexer already resolves 'ancestors' for record inheritance
+  # (AppConfig[:record_inheritance_resolves]); make sure it stays there. PUIIndexer
+  # reads this when it loads, which is after the plugin indexers.
+  CONTENT_WARNINGS_PUI_RESOLVES = ['ancestors'].freeze
+  AppConfig[:record_inheritance_resolves] = (Array(AppConfig[:record_inheritance_resolves]) + CONTENT_WARNINGS_PUI_RESOLVES).uniq
 
   add_indexer_initialize_hook do |indexer|
     if AppConfig[:plugins].include?('aspace_content_warnings')
+      # only the PUI shows inherited warnings, and only it resolves ancestors
+      pui = defined?(PUIIndexer) && indexer.is_a?(PUIIndexer)
+
       hook = proc {|doc, record|
         doc['content_warnings_u_sstr'] = []
         doc['content_warnings_code_u_sstr'] = []
@@ -23,7 +32,7 @@ class IndexerCommon
           end
         end
 
-        next unless CONTENT_WARNING_CHILD_TYPES.include?(doc['primary_type'])
+        next unless pui && CONTENT_WARNING_CHILD_TYPES.include?(doc['primary_type'])
 
         doc['inherited_content_warnings_u_sstr'] = []
         # only check if the object is not already tagged
@@ -53,7 +62,7 @@ class IndexerCommon
   def self.content_warnings_resolved_ancestors(record)
     ancestors = record['record']['ancestors']
     if ancestors.nil? || ancestors.any? {|anc| anc['_resolved'].nil?}
-      record_data = JSONModel::HTTP.get_json(record['uri'], 'resolve[]' => ['ancestors'])
+      record_data = JSONModel::HTTP.get_json(record['uri'], 'resolve[]' => CONTENT_WARNINGS_PUI_RESOLVES)
       ancestors = record_data && record_data['ancestors']
     end
     Array(ancestors)
