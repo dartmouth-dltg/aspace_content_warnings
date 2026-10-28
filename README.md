@@ -212,11 +212,10 @@ modify them, you will need to reconcile the changes.
 EAD, EAD3 and MARC output is added through the core `add_serialize_step` / `add_decorator` hooks,
 so no core exporter methods are replaced.
 
-Only the PUI shows inherited warnings, so only the PUI indexer works them out. It resolves
-`ancestors` in its batch fetch (the plugin makes sure `ancestors` is in
-`AppConfig[:record_inheritance_resolves]`, the PUI indexer's own resolve list), so inherited
-warnings don't cost a backend request per record. The staff indexer indexes only a record's own
-warnings and does not resolve ancestors. On releases without `IndexerCommon#final_doc_rules` (added in
+The indexer resolves `ancestors` in the batch fetch so inherited warnings don't cost a backend
+request per record. Inherited warnings are only worked out for the document the PUI shows: the PUI
+indexer's document for record inheritance types (by default archival objects), and the staff
+indexer's document for other types such as digital object components. On releases without `IndexerCommon#final_doc_rules` (added in
 [archivesspace #3667](https://github.com/archivesspace/archivesspace/commit/597dcfc017c64fece865b33051b85d9678502958)),
 the PUI indexer deletes ancestors before plugin hooks run, so the plugin puts its document prepare
 hook at the front of the indexer's internal `@document_prepare_hooks` list. Where `final_doc_rules`
