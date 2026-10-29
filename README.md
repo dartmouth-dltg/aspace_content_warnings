@@ -222,6 +222,11 @@ hook at the front of the indexer's internal `@document_prepare_hooks` list. Wher
 exists it registers the hook normally. If another plugin also needs to run first, check how the
 two hooks interact.
 
+### Asset Cache Busting
+
+The PUI css and javascript files are loaded with a query string derived from an MD5 hash of their
+contents (computed on startup), so browsers only fetch new copies when the files change.
+
 ## Credits
 
 Plugin developed by Joshua Shaw [Joshua.D.Shaw@dartmouth.edu], Digital Library Technologies Group
