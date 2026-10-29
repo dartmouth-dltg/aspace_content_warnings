@@ -3,8 +3,11 @@ ArchivesSpace Content Warnings
 
 ## Getting started
 
-This plugin has been tested with ArchivesSpace versions 3.1.1+. Please use the release
-suitable for your version of ArchivesSpace.
+This plugin has been tested with ArchivesSpace versions 3.1.1+. The `as-4.2.1` branch has been
+reviewed against the 4.2.1 source (exporter, indexer, PUI and staff UI hooks) but has not yet been
+tested in a running 4.2.1 instance. Please use the release suitable for your version of ArchivesSpace.
+
+The PUI JavaScript uses ES2022 features (class private members), so a current browser is required.
 
 Unzip the relevant release of the plugin to your
 ArchivesSpace plugins directory.
@@ -44,7 +47,7 @@ cw_racism: Racist Content
 This plugin accepts five configuration options. One controls the visibility of Content Warnings
 as facets in the staff application and the visibility of Content Warnings
 as facets in the PUI. Set either `staff_faceting` or `public_faceting` to `true` to
-enable Content Warnings facets in that area. 
+enable Content Warnings facets in that area.
 
 Another option `general_only` can be set to `true` to disable the display of specific warning
 tags in the PUI and any exports (EAD, etc). If set, only the general content warning and its default
@@ -54,7 +57,7 @@ description will display. Typically you will want to leave this set to `false`.
 AppConfig[:aspace_content_warnings] = {
   'staff_faceting' => true,
   'public_faceting' => true,
-  'general_only' => true
+  'general_only' => false
 }
 ```
 
@@ -198,18 +201,31 @@ MARC exports include an additional 520 field for each applied tag. Example: 520 
 
 ## Core Overrides
 
-This plugin overrides several methods related to EAD & EAD3 export. If you have modified these or
-are using plugins that also modify these methods, you will need to reconcile them. Specifically
+This plugin patches a few core methods. If you have modified these or are using plugins that also
+modify them, you will need to reconcile the changes.
 
 ```
-    MARCModel::initialize
-    MARCModel::self.from_aspace_object
-```     
+    MARCModel.from_aspace_object     (wrapped via alias_method; keeps a reference to the source record)
+    Searchable#set_up_advanced_search (PUI; only when `public_faceting` is enabled)
+```
 
-If you are using other plugins which override the same files, you will need to reconcile
-them.
+EAD, EAD3 and MARC output is added through the core `add_serialize_step` / `add_decorator` hooks,
+so no core exporter methods are replaced.
+
+The indexer resolves `ancestors` in the batch fetch so inherited warnings don't cost a backend
+request per record. Inherited warnings are only worked out for the document the PUI shows: the PUI
+indexer's document for record inheritance types (by default archival objects), and the staff
+indexer's document for other types such as digital object components. On releases without `IndexerCommon#final_doc_rules` (added in
+[archivesspace #3667](https://github.com/archivesspace/archivesspace/commit/597dcfc017c64fece865b33051b85d9678502958)),
+the PUI indexer deletes ancestors before plugin hooks run, so the plugin puts its document prepare
+hook at the front of the indexer's internal `@document_prepare_hooks` list. Where `final_doc_rules`
+exists it registers the hook normally. If another plugin also needs to run first, check how the
+two hooks interact.
 
 ## Credits
 
 Plugin developed by Joshua Shaw [Joshua.D.Shaw@dartmouth.edu], Digital Library Technologies Group
 Dartmouth Library, Dartmouth College
+
+Partially authored with assistance from Claude (Anthropic), including the ArchivesSpace 4.2.1
+compatibility review and related fixes.

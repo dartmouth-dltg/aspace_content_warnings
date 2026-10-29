@@ -7,7 +7,7 @@ class AspaceContentWarningsEAD3 < EAD3Serializer
           xml.head {
             sanitize_mixed_content(I18n.t("content_warning.section_title"), xml, fragments)
           }
-          if AppConfig.has_key?(:aspace_content_warnings) && AppConfig[:aspace_content_warnings]['general_only'] == true
+          if AspaceContentWarningsEADHelper.general_only?
             cw_text = AspaceContentWarningsEADHelper.general_cw_text
             xml.p {
               sanitize_mixed_content(cw_text, xml, fragments)
@@ -29,7 +29,7 @@ class AspaceContentWarningsEAD3 < EAD3Serializer
       if digital_object['content_warnings'] && digital_object['content_warnings'].length > 0
         xml.didnote {
           sanitize_mixed_content(I18n.t("content_warning.section_title"), xml, fragments)
-          if AppConfig.has_key?(:aspace_content_warnings) && AppConfig[:aspace_content_warnings]['general_only'] == true
+          if AspaceContentWarningsEADHelper.general_only?
             xml.lb {}
             sanitize_mixed_content(AspaceContentWarningsEADHelper.general_cw_text, xml, fragments)
           else
