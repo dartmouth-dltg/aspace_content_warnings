@@ -30,10 +30,13 @@
     <% if defined?(@request) && !@request.nil? %>
         <% public_submit_content_warning = render partial: 'content_warnings/submit_content_warning' %>
         <%= render partial: 'shared/modal', locals: {:modal_id => 'content_warning_submit_modal', :title => t('aspace_content_warnings_public_submit'),
-            :modal_body => public_submit_content_warning } %>
+            :modal_body => public_submit_content_warning,
+            :footer_submit_form_id => 'submit_content_warning_form',
+            :footer_submit_id => 'submit_content_warning_btn',
+            :footer_submit_label => t('aspace_content_warnings_submit_btn') } %>
         <% content_warnings_allow_pui_submit = true %>
         <script>
-        setupContentWarningSubmit("content_warning_submit_modal", <%=raw t('aspace_content_warnings_submit_btn').to_json %>, <%=raw t('aspace_content_warnings_submit_btn_text').to_json %>);
+        setupContentWarningSubmit("content_warning_submit_modal", <%=raw t('aspace_content_warnings_submit_btn_text').to_json %>);
         </script>
     <% end %>
     <% end %>

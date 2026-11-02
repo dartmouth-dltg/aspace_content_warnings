@@ -46,9 +46,8 @@ class ContentWarningTags {
 class ContentWarningSubmit {
   static REQUIRED_FIELDS = ['#user_name', '#user_email'];
 
-  constructor(modalId, submitText, buttonText) {
+  constructor(modalId, buttonText) {
     this.$modal = $(`#${modalId}`);
-    this.submitText = submitText;
     this.buttonText = buttonText;
   }
 
@@ -77,10 +76,6 @@ class ContentWarningSubmit {
 
   // bind once so reopening the modal doesn't stack handlers
   #bindModal() {
-    $('body').on('click', '#submit_content_warning_btn', () => {
-      $('#submit_content_warning_form').submit();
-    });
-
     this.$modal.find('#submit_content_warning_form').on('submit', (e) => {
       const form = $(e.currentTarget);
       let proceed = true;
@@ -96,7 +91,6 @@ class ContentWarningSubmit {
 
   #open() {
     this.$modal.modal('show');
-    this.$modal.find('.modal-footer .action-btn').attr('id', 'submit_content_warning_btn').html(this.submitText);
     this.$modal.find('.is-invalid').removeClass('is-invalid');
   }
 }
@@ -121,8 +115,8 @@ const addHeaderLinkToHCStatement = (statement) => {
   });
 };
 
-const setupContentWarningSubmit = (modalId, submitText, buttonText) => {
-  new ContentWarningSubmit(modalId, submitText, buttonText).init();
+const setupContentWarningSubmit = (modalId, buttonText) => {
+  new ContentWarningSubmit(modalId, buttonText).init();
 };
 
 // clicking a tag scrolls to the full list

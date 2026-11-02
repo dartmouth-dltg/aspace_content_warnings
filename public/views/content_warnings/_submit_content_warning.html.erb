@@ -2,25 +2,21 @@
 <%= render partial: 'content_warnings/submit_content_warning_hiddens' %>
 <div id="public_submit_content_warning">
     <div class="form-group required ">
-      <%= label_tag(:user_name, "#{t('request.user_name')} #{t('request.required')}" ,  :class => 'sr-only') %>
+      <%= label_tag(:user_name, "#{t('request.user_name')} #{t('request.required')}" ,  :class => 'visually-hidden') %>
       <div class="input-group">
         <%= text_field_tag :user_name, nil, :placeholder => t('request.user_name'), :class => "form-control"%>
-        <div class="input-group-append">
-          <span class="input-group-text required aria-hidden"><%= t('request.required') %></span>
-        </div>
+        <span class="input-group-text required aria-hidden"><%= t('request.required') %></span>
       </div>
     </div>
     <div class="form-group required ">
-      <%= label_tag(:user_email, "#{t('request.user_email')} #{t('request.required')}",  :class => 'sr-only') %>
+      <%= label_tag(:user_email, "#{t('request.user_email')} #{t('request.required')}",  :class => 'visually-hidden') %>
       <div class="input-group">
         <%= text_field_tag :user_email, nil, :type => 'email', :placeholder => t('request.user_email'), :class => 'form-control' %>
-        <div class="input-group-append">
-          <span class="input-group-text required aria-hidden"><%= t('request.required') %></span>
-        </div>
+        <span class="input-group-text required aria-hidden"><%= t('request.required') %></span>
       </div>
     </div>
     <div class="form-group ">
-      <%= label_tag(:note, t('aspace_content_warnings_submit_note'),  :class => 'sr-only') %>
+      <%= label_tag(:note, t('aspace_content_warnings_submit_note'),  :class => 'visually-hidden') %>
       <%= text_area_tag :note, nil, :rows=> "3", :cols => "25", :placeholder => t('aspace_content_warnings_submit_note'), :class => 'form-control' %>
     </div>
     <div class="form-group honeypot">
