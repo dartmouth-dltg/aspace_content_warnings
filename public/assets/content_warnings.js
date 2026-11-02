@@ -87,7 +87,7 @@ class ContentWarningSubmit {
       ContentWarningSubmit.REQUIRED_FIELDS.forEach((selector) => {
         const field = form.find(selector);
         const missing = field.val().trim() === '';
-        field.closest('.form-group').toggleClass('has-error', missing);
+        field.toggleClass('is-invalid', missing);
         if (missing) proceed = false;
       });
       return proceed;
@@ -97,7 +97,7 @@ class ContentWarningSubmit {
   #open() {
     this.$modal.modal('show');
     this.$modal.find('.modal-footer .action-btn').attr('id', 'submit_content_warning_btn').html(this.submitText);
-    this.$modal.find('.form-group').removeClass('has-error');
+    this.$modal.find('.is-invalid').removeClass('is-invalid');
   }
 }
 
