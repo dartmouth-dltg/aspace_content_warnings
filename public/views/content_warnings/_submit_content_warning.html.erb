@@ -1,25 +1,25 @@
 <%= form_tag(app_prefix("fill_request"), method: 'post', :id => 'submit_content_warning_form') do %>
 <%= render partial: 'content_warnings/submit_content_warning_hiddens' %>
 <div id="public_submit_content_warning">
-    <div class="form-group required ">
+    <div class="mb-3 required">
       <%= label_tag(:user_name, "#{t('request.user_name')} #{t('request.required')}" ,  :class => 'visually-hidden') %>
       <div class="input-group">
         <%= text_field_tag :user_name, nil, :placeholder => t('request.user_name'), :class => "form-control"%>
         <span class="input-group-text required aria-hidden"><%= t('request.required') %></span>
       </div>
     </div>
-    <div class="form-group required ">
+    <div class="mb-3 required">
       <%= label_tag(:user_email, "#{t('request.user_email')} #{t('request.required')}",  :class => 'visually-hidden') %>
       <div class="input-group">
         <%= text_field_tag :user_email, nil, :type => 'email', :placeholder => t('request.user_email'), :class => 'form-control' %>
         <span class="input-group-text required aria-hidden"><%= t('request.required') %></span>
       </div>
     </div>
-    <div class="form-group ">
+    <div class="mb-3">
       <%= label_tag(:note, t('aspace_content_warnings_submit_note'),  :class => 'visually-hidden') %>
       <%= text_area_tag :note, nil, :rows=> "3", :cols => "25", :placeholder => t('aspace_content_warnings_submit_note'), :class => 'form-control' %>
     </div>
-    <div class="form-group honeypot">
+    <div class="honeypot">
       <span class="aria-hidden">
         <%= label_tag :comment %>
         <%= text_field_tag :comment, nil, tabindex: '-1', :class => 'form-control'%>
